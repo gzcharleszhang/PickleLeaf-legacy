@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 /* GET submitted page */
 router.get('/submitted/:bookid', function(req, res, next){
   res.render('submitted', {
-    title: 'UW Textbooks', output: req.params.bookid
+    title: 'UW Textbooks', book_id: req.params.bookid
   })
 });
 
