@@ -6,6 +6,10 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var submit = require('./routes/submit');
+var register = require('./routes/register')
+
+var expressValidator = require('express-validator');
+var expressSession = require('express-session');
 
 var app = express();
 
@@ -22,11 +26,14 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressSession({secret: 'Conrad', saveUninitialized: false, resave: false}));
 
 app.use('/', index);
 app.use('/submit', submit);
+app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
