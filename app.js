@@ -3,13 +3,22 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongo = require('mongodb').MongoClient();
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test', {
+  useMongoClient: true,
+})
+;
+var db = mongoose.connection;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var expressValidator = require('express-validator');
+var expressSession = require('express-session');
+var flash = require('connect-flash');
 
 var index = require('./routes/index');
 var submit = require('./routes/submit');
-var register = require('./routes/register')
-
-var expressValidator = require('express-validator');
-var expressSession = require('express-session');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -29,11 +38,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Express Session Middleware
 app.use(expressSession({secret: 'Conrad', saveUninitialized: false, resave: false}));
 
+// Passport init
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect Flash Middleware
+app.use(flash());
+
+// Global Vars
+app.use(function(req, res, next){
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+})
+
+// Routes
 app.use('/', index);
 app.use('/submit', submit);
-app.use('/register', register);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

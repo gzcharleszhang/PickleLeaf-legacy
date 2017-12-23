@@ -2,13 +2,17 @@ var express = require('express');
 var router = express.Router();
 
 /* GET register page*/
-router.get('/', function(req, res, next) {
+router.get('/register', function(req, res, next) {
     res.render('register', { title: 'UW Textbooks', success: req.session.success, errors: req.session.errors });
     req.session.errors = null;
 });
 
 /* POST user registration */
-router.post('/', function(req, res, next) {
+router.post('/register', function(req, res, next) {
+    var user = {
+        email: req.body.email,
+        password: req.body.password
+    }
     req.check('email', 'Invalid email address').isEmail();
     req.check('password', 'Password is invalid').isLength({min: 4});
     req.check('password', 'Passwords do not match').equals(req.body.confirmPassword);
@@ -20,6 +24,6 @@ router.post('/', function(req, res, next) {
     } else {
         req.session.success = true;
     }
-    res.redirect('/register');
+    res.redirect('/users/register');
 });
 module.exports = router;
