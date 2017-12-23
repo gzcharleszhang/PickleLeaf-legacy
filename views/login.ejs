@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title><%=title%></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
@@ -9,8 +9,8 @@
 <body>
     <% include templates/flash.ejs %>
     <% include templates/navigation.ejs%>
-    <h3 class="card-header align-text-center">Sell a Book</h3>
-    <form method="post" action="/submit">
+    <h3 class="card-header align-text-center">Account Login</h3>
+    <form method="post" action="/users/login">
         <div class="form-group text-center">
             <label>Username</label>
             <input type="text" class="form-control" name="username" placeholder="Username">
@@ -20,7 +20,7 @@
             <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </div>
     </form>
 </body>

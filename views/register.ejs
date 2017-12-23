@@ -1,36 +1,44 @@
-<h3>
-    User Registration
-</h3>
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
 
-<% if (success) { %>
-    <h3>
-        You have succesfully registered for an account! <br>
-    </h3>
-<% } else { %>
-    <% if (errors) { %>
-        <section class="errors">
-            <ul>
-                <% errors.forEach(function(item){%>
-                <li> <%=item.msg%></li>
-                <% });%>
-            </ul>
-        </section>
-    <% } %>
-<form action="/users/register" method="post">
-    <div class="input">
-        <label for="email">E-Mail</label>
-        <input type="text" id="email" name="email">
-    </div>
-    <div class="input">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-    </div>
-    <div class="input">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirmPassword">
-    </div>
-    <button type="submit">Sign up</button>
-</form>
-<% } %>
-
-<a href="/"> Back to Home </a>
+<body>
+    <% include templates/flash.ejs %>
+    <% include templates/navigation.ejs%>
+    <% if (errors.length > 0){ %>
+        <% errors.forEach(function(item){ %>
+            <div class="alert alert-danger"><%=item.msg%></div>
+        <%})%>
+    <%}%>
+    <h3 class="card-header align-text-center">Account Registration</h3>
+    <form method="post" action="/users/register">
+        <div class="form-group text-center">
+            <label>Name</label>
+            <input type="text" class="form-control" placeholder="Name" name="name">
+        </div>
+        <div class="form-group text-center">
+            <label>Username</label>
+            <input type="text" class="form-control" placeholder="Username" name="username">
+        </div>
+        <div class="form-group text-center">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email" name="email">
+        </div>
+        <div class="form-group text-center">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <div class="form-group text-center">
+            <label>Confirm Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password2">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+</body>
+</html>
