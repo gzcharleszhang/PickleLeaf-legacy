@@ -1558,15 +1558,14 @@ pre code {
 }
 
 .table {
-  width: 100%;
+  width: 70%;
   max-width: 100%;
   margin-bottom: 1rem;
-  background-color: transparent;
 }
 
 .table th,
 .table td {
-  padding: 0.75rem;
+  padding: 1rem;
   vertical-align: top;
   border-top: 1px solid #e9ecef;
 }
@@ -3512,11 +3511,16 @@ tbody.collapse.show {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
+  color: white;
 }
 
-.nav-link:focus, .nav-link:hover {
-  text-decoration: none;
+.nav-link:hover{
+  background-color: #6c757d;
+}
+
+.nav-link:focus{
+
 }
 
 .nav-link.disabled {
@@ -3566,8 +3570,7 @@ tbody.collapse.show {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #007bff;
+
 }
 
 .nav-fill .nav-item {
@@ -3621,6 +3624,7 @@ tbody.collapse.show {
   display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
+  padding-left: 0.5rem;
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;

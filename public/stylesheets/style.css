@@ -1,0 +1,24 @@
+.nav-link:hover{
+    color: white;
+    background-color: #868e96;
+    text-decoration: none;
+}
+
+.page-header{
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding-top: 100px;
+    margin: auto;
+    padding-left: 1%;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.125);
+}
+
+form {
+    padding-top: 5%;
+}
+
+.button{
+    padding-top: 2%;
+}
