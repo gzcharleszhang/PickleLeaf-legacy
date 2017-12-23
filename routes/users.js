@@ -73,6 +73,7 @@ passport.use(new LocalStrategy(
         });
     }));
 
+// Starts player session
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -89,13 +90,14 @@ router.get('/login', function(req, res, next) {
     })
 });
 
-
+// POST login page
 router.post('/login',
     passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
     function(req, res) {
         res.redirect('/');
 });
 
+// GET logout page
 router.get('/logout', function(req, res){
     req.logout();
 
