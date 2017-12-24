@@ -7,17 +7,14 @@
 </head>
 
 <body>
-    <% include templates/flash.ejs %>
     <% include templates/navigation.ejs%>
-<<<<<<< HEAD
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
         <%})%>
     <%}%>
-=======
+    <% include templates/flash.ejs %>
     <h3 class="page-header align-text-center">Sell a Book</h3>
->>>>>>> 31c13d7bba166cb009521f53845b3bd2861c1891
     <form method="post" action="/submit">
         <div class="form-group text-center">
             <label>Book Title</label>

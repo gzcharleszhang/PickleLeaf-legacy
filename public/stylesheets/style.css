@@ -7,7 +7,7 @@
 .page-header{
     -ms-flex-pack: justify;
     justify-content: space-between;
-    padding-top: 100px;
+    /*padding-top: 100px;*/
     margin: auto;
     padding-left: 1%;
     border-top-left-radius: 0.3rem;
@@ -21,4 +21,8 @@ form {
 
 .button{
     padding-top: 2%;
+}
+
+.nav-space{
+    padding-top: 5px;
 }

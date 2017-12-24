@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <% include templates/flash.ejs %>
     <% include templates/navigation.ejs%>
+    <% include templates/flash.ejs %>
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
@@ -26,7 +26,7 @@
             <input type="text" class="form-control" placeholder="Username" name="username">
         </div>
         <div class="form-group text-center">
-            <label>Email</label>
+            <label>UW Email (example@uwaterloo.ca)</label>
             <input type="email" class="form-control" placeholder="Email" name="email">
         </div>
         <div class="form-group text-center">
