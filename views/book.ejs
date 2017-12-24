@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <% include templates/navigation.ejs%>
+    <% include templates/flash.ejs %>
+    <h3 class="page-header">Book: <%= book_title %></h3>
+    <div>
+        <h5>
+            Course: <%=course%>
+        </h5>
+        <h5>
+            Author: <%=author%>
+        </h5>
+        <h5>
+            Price: <%=price%>
+        </h5>
+        <h5>
+            Seller: <%=seller%>
+        </h5>
+        <p>
+            Description: <%=description%>
+        </p>
+    </div>
+</body>
+</html>
