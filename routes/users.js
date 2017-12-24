@@ -65,7 +65,7 @@ passport.use(new LocalStrategy(
             User.comparePassword(password, user.password, function(err, isMatch){
                 if(err) throw err;
                 if(isMatch){
-                    return done(null, user);
+                    return done(null, user, {message: 'You are logged in!'});
                 } else {
                     return done(null, false, {message: 'Invalid password'});
                 }
@@ -92,9 +92,11 @@ router.get('/login', function(req, res, next) {
 
 // POST login page
 router.post('/login',
-    passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
+    passport.authenticate('local', {failureRedirect:'/users/login', failureFlash: true}),
     function(req, res) {
+        req.flash('success_msg', 'You are logged in!');
         res.redirect('/');
+
 });
 
 // GET logout page
