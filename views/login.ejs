@@ -9,7 +9,7 @@
 <body>
     <% include templates/flash.ejs %>
     <% include templates/navigation.ejs%>
-    <h3 class="card-header align-text-center">Account Login</h3>
+    <h3 class="page-header">Account Login</h3>
     <form method="post" action="/users/login">
         <div class="form-group text-center">
             <label>Username</label>
@@ -19,7 +19,7 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password">
         </div>
-        <div class="form-group text-center">
+        <div class="form-group text-center button">
             <button type="submit" class="btn btn-primary">Login</button>
         </div>
     </form>
