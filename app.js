@@ -6,8 +6,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test', {
   useMongoClient: true
-})
-;
+});
 var db = mongoose.connection;
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;

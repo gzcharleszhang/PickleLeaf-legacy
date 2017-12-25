@@ -10,29 +10,36 @@
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
     <h3 class="page-header">My Books</h3>
-    <div>
+    <table class="table table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Price</th>
+            <th>Status</th>
+        </tr>
         <% if (books.length > 0){ %>
             <% books.forEach(function(book){ %>
-            <div>
-                <a href='<%='/book/'+book._id%>'><%=book.title%></a>
-                <h5>
-                    Course: <%=book.course%>
-                </h5>
-                <h5>
-                    Price: <%=book.price%>
-                </h5>
-                <h5>
-                    Status:
+            <tr>
+                <td>
+                    <a href='<%='/book/'+book._id%>'><%=book.title%></a>
+                </td>
+                <td>
+                    <%=book.course%>
+                </td>
+                <td>
+                    <%=book.price%>
+                </td>
+                <td>
                     <% if (book.sold){%>
                         Sold
                     <%}else{%>
                         Selling
                     <%}%>
-                </h5>
-            </div>
+                </td>
+            </tr>
             <%})%>
         <%}%>
-    </div>
+    </table>
     <h3 class="page-header">Books Purchased</h3>
 </body>
 </html>

@@ -5,7 +5,13 @@ var Book = require('../models/book');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'UW Textbooks' });
+  Book.find({}, 'title author course price description _id', function (err, books) {
+    console.log(books);
+    res.render('index', {
+      title: 'UW Textbooks',
+      books: books,
+    })
+  })
 });
 
 /* GET book page */
