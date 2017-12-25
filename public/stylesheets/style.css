@@ -1,3 +1,13 @@
+table {
+    text-align: center;
+    width: 100% !important;
+}
+
+h3 {
+    text-align: center;
+    padding: 20px 0px;
+}
+
 .nav-link:hover{
     color: white;
     background-color: #868e96;
