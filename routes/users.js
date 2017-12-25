@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var Book = require('../models/book');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
@@ -73,7 +74,7 @@ passport.use(new LocalStrategy(
         });
     }));
 
-// Starts player session
+// Starts user session
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -100,12 +101,35 @@ router.post('/login',
 });
 
 // GET logout page
-router.get('/logout', function(req, res){
+router.get('/logout', ensureAuthenticated, function(req, res){
     req.logout();
 
     req.flash('success_msg', 'You are logged out');
 
     res.redirect('/users/login');
 });
+
+// GET dashboard page
+router.get('/dashboard', ensureAuthenticated, function(req, res, next){
+   var username = req.user.username;
+
+    Book.find({username: username}, 'title author course price description _id', function (err, books) {
+        console.log(books);
+        res.render('dashboard', {
+            title: 'UW Textbooks',
+            books: books,
+            username: username
+        })
+    })
+});
+
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        //req.flash('error_msg','You are not logged in');
+        res.redirect('/users/login');
+    }
+}
 
 module.exports = router;

@@ -41,7 +41,8 @@ router.post('/', ensureAuthenticated, function(req, res, next){
             course: course,
             price: price,
             description: description,
-            username: username
+            username: username,
+            sold: false
         });
 
         Book.createBook(newBook, function(err, book){

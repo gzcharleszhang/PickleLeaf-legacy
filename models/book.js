@@ -20,6 +20,9 @@ var BookSchema = mongoose.Schema({
     },
     description: {
         type: String
+    },
+    sold: {
+        type: Boolean
     }
 });
 

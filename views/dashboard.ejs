@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <% include templates/navigation.ejs%>
+    <% include templates/flash.ejs %>
+    <h3 class="page-header">My Books</h3>
+    <div>
+        <% if (books.length > 0){ %>
+            <% books.forEach(function(book){ %>
+            <div>
+                <a href='<%='/book/'+book._id%>'><%=book.title%></a>
+                <h5>
+                    Course: <%=book.course%>
+                </h5>
+                <h5>
+                    Price: <%=book.price%>
+                </h5>
+                <h5>
+                    Status:
+                    <% if (book.sold){%>
+                        Sold
+                    <%}else{%>
+                        Selling
+                    <%}%>
+                </h5>
+            </div>
+            <%})%>
+        <%}%>
+    </div>
+    <h3 class="page-header">Books Purchased</h3>
+</body>
+</html>
