@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+<% include templates/navigation.ejs%>
+<% if (errors.length > 0){ %>
+<% errors.forEach(function(item){ %>
+<div class="alert alert-danger"><%=item.msg%></div>
+<%})%>
+<%}%>
+<% include templates/flash.ejs %>
+<h3 class="page-header">Search Existing Textbooks</h3>
+<form method="post" action="/search">
+    <div class="form-group text-center">
+        <label>Search:</label>
+        <input type="text" class="form-control" name="keyword" placeholder="Search book titles, course names, authors...">
+    </div>
+    <div class="form-group text-center button">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<h3 class="page-header">Book Listing</h3>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>Title</th>
+        <th>Course</th>
+        <th>Author</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (setbooks.length > 0){ %>
+    <% setbooks.forEach(function(book){ %>
+    <tr>
+        <td>
+            <a href='<%='/setbook/'+book._id%>'><%=book.title%></a>
+        </td>
+        <td>
+            <%=book.course%>
+        </td>
+        <td>
+            <%=book.author%>
+        </td>
+        <td>
+            <a href='<%='/submit/book/' +book._id%>'>sell</a>
+        </td>
+    </tr>
+    <%})%>
+    <%}%>
+    </tbody>
+</table>
+</body>
+</html>

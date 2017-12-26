@@ -17,12 +17,11 @@ var flash = require('connect-flash');
 var index = require('./routes/index');
 var submit = require('./routes/submit');
 var users = require('./routes/users');
-
+var search = require('./routes/search');
 var app = express();
 
 // MongoDB
 var mongo = require('mongodb');
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,12 +53,13 @@ app.use(function(req, res, next){
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
   next();
-})
+});
 
 // Routes
 app.use('/', index);
 app.use('/submit', submit);
 app.use('/users', users);
+app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
