@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Book = require('./book');
 
 // Book Schema
 var SetbookSchema = mongoose.Schema({
@@ -14,6 +15,13 @@ var SetbookSchema = mongoose.Schema({
     },
     imageURL: {
         type: String
+    },
+    books: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Book"
+    }],
+    _id: {
+        type: mongoose.Schema.Types.ObjectId
     }
 });
 

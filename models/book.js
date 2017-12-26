@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Setbook = require('../models/setbook');
+var Setbook = require('./setbook');
 var Schema = mongoose.Schema;
 
 

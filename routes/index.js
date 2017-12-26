@@ -21,12 +21,10 @@ router.get('/setbook/:setbookid', function(req, res, next){
   var setbookid = req.params.setbookid;
   var setbook = new Setbook();
 
-  Setbook.findById(setbookid, function (err, setbook) {
+  Setbook.findById(setbookid).populate('books').exec(function (err, setbook) {
     if (err) return handleError(err);
     console.log(setbook);
     var book = new Book();
-    Book.find({'setbookID': setbookid}, 'username price description sold', function (err, books){
-      if (err) return handleError(err);
 
       res.render('setbook', {
         title: 'UW Textbooks',
@@ -34,10 +32,9 @@ router.get('/setbook/:setbookid', function(req, res, next){
           author: setbook.author,
           course: setbook.course,
           setbookid: setbookid,
-          books: books,
+          books: setbook.books,
           imageURL: setbook.imageURL
       })
-    })
   })
 });
 

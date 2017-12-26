@@ -48,7 +48,8 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
             title: title,
             author: author,
             course: course,
-            imageURL: imageURL
+            imageURL: imageURL,
+            books: []
         });
 
         Setbook.createBook(newSetbook, function(err, setbook){
@@ -88,11 +89,23 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
             setbookID: setbookID,
             sold: false
         });
-
         Book.createBook(newBook, function(err, book){
             if(err) throw err;
             console.log(book);
+
+
+            Setbook.findById(setbookID, function (err, setbook) {
+                if (err) throw(err);
+
+                setbook.books = setbook.books.concat([book._id]);
+                setbook.save(function (err, updatedSetbook) {
+                    if (err) throw(err);
+                    console.log(updatedSetbook);
+                });
+            });
+
         });
+
 
         req.flash('success_msg', 'You have successfully submitted a book.');
 
