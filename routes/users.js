@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Book = require('../models/book');
+var Setbook = require('../models/setbook');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
@@ -109,15 +110,41 @@ router.get('/logout', ensureAuthenticated, function(req, res){
     res.redirect('/users/login');
 });
 
+
+
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
    var username = req.user.username;
 
-    Book.find({username: username}, 'title author course price description _id', function (err, books) {
-        console.log(books);
+
+    Book.find({username: username}, 'price description sold _id setbookID', function (err, books) {
+        var newBooks = [];
+        if (books.length > 0){
+            console.log('hi1');
+            books.forEach(function(book){
+                var setbookID = book.setbookID;
+                Setbook.findById(setbookID, 'title course', function (err, setbook){
+                    if (err) return handleError(err);
+
+                    var temp = {
+                        title: setbook.title,
+                        price: book.price,
+                        description: book.description,
+                        sold: book.sold,
+                        setbookID: book.setbookID,
+                        _id: book._id,
+                        course: setbook.course
+                    };
+                    console.log('hi2');
+                    newBooks.push(temp);
+                    console.log(newBooks);
+                })
+            })
+        }
+        console.log('hi3');
         res.render('dashboard', {
             title: 'UW Textbooks',
-            books: books,
+            books: newBooks,
             username: username
         })
     })
