@@ -111,42 +111,45 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 });
 
 
+function getBooks(books){
+    var newBooks = [];
+    if (books.length > 0){
+        console.log('hi1');
+
+        books.forEach(function(book){
+            var setbookID = book.setbookID;
+            Setbook.findById(setbookID, 'title course', function (err, setbook){
+                if (err) return handleError(err);
+
+                var temp = {
+                    title: setbook.title,
+                    price: book.price,
+                    description: book.description,
+                    sold: book.sold,
+                    setbookID: book.setbookID,
+                    _id: book._id,
+                    course: setbook.course
+                };
+                console.log('hi2');
+                newBooks.push(temp);
+            })
+        });
+    }
+    return newBooks;
+}
+
 
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
    var username = req.user.username;
 
+    Book.find({username: username}).populate('setbookID').exec(function (err, books) {
 
-    Book.find({username: username}, 'price description sold _id setbookID', function (err, books) {
-        var newBooks = [];
-        if (books.length > 0){
-            console.log('hi1');
-            books.forEach(function(book){
-                var setbookID = book.setbookID;
-                Setbook.findById(setbookID, 'title course', function (err, setbook){
-                    if (err) return handleError(err);
-
-                    var temp = {
-                        title: setbook.title,
-                        price: book.price,
-                        description: book.description,
-                        sold: book.sold,
-                        setbookID: book.setbookID,
-                        _id: book._id,
-                        course: setbook.course
-                    };
-                    console.log('hi2');
-                    newBooks.push(temp);
-                    console.log(newBooks);
-                })
+            res.render('dashboard', {
+                title: 'UW Textbooks',
+                books: books,
+                username: username
             })
-        }
-        console.log('hi3');
-        res.render('dashboard', {
-            title: 'UW Textbooks',
-            books: newBooks,
-            username: username
-        })
     })
 });
 

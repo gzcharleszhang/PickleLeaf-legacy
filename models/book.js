@@ -1,4 +1,7 @@
 var mongoose = require('mongoose');
+var Setbook = require('../models/setbook');
+var Schema = mongoose.Schema;
+
 
 // Book Schema
 var BookSchema = mongoose.Schema({
@@ -10,7 +13,8 @@ var BookSchema = mongoose.Schema({
         type: String
     },
     setbookID: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: "Setbook"
     },
     description: {
         type: String

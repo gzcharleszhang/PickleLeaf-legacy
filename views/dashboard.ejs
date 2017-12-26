@@ -17,6 +17,7 @@
                 <th>Course</th>
                 <th>Price</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -24,10 +25,10 @@
             <% books.forEach(function(book){ %>
             <tr>
                 <td>
-                    <a href='<%='/book/'+book._id%>'><%=book.title%></a>
+                    <a href='<%='/setbook/'+book.setbookID._id%>'><%=book.setbookID.title%></a>
                 </td>
                 <td>
-                    <%=book.course%>
+                    <%=book.setbookID.course%>
                 </td>
                 <td>
                     <%=book.price%>
@@ -38,6 +39,9 @@
                     <%}else{%>
                         Selling
                     <%}%>
+                </td>
+                <td>
+                    <a href="<%='/book/'+book._id%>">view</a>
                 </td>
             </tr>
             <%})%>

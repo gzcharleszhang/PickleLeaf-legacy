@@ -48,11 +48,13 @@ router.get('/book/:bookid', function(req, res, next){
   var book = new Book();
   var avail;
 
-  Book.findById(bookid, 'price description username sold setbookID', function (err, book) {
-    if (err) return handleError(err);
+  Book.findById(bookid).populate('setbookID').exec(function (err, book) {
+
+    if (err){
+        console.log(err);
+    }
+
     console.log(book.setbookID);
-    Setbook.findById(book.setbookID, 'title author course imageURL', function(err, setbook){
-      console.log(setbook);
         if (book.sold){
             avail = 'Book Sold';
         }else{
@@ -61,16 +63,15 @@ router.get('/book/:bookid', function(req, res, next){
         res.render('book', {
             title: 'UW Textbooks',
             book_id: bookid,
-            book_title: setbook.title,
-            author: setbook.author,
-            course: setbook.course,
+            book_title: book.setbookID.title,
+            author: book.setbookID.author,
+            course: book.setbookID.course,
             price: book.price,
             description: book.description,
             seller: book.username,
             avail: avail,
-            imageURL: setbook.imageURL
+            imageURL: book.setbookID.imageURL
         })
-    })
   });
 });
 
