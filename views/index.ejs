@@ -16,6 +16,7 @@
                 <th>Title</th>
                 <th>Course</th>
                 <th>Author</th>
+                <th>No. of Listings</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,9 @@
                 </td>
                 <td>
                     <%=book.author%>
+                </td>
+                <td>
+                    <%=book.books.length%>
                 </td>
             </tr>
             <%})%>

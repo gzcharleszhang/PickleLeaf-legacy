@@ -19,10 +19,7 @@ var SetbookSchema = mongoose.Schema({
     books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Book"
-    }],
-    _id: {
-        type: mongoose.Schema.Types.ObjectId
-    }
+    }]
 });
 
 var Setbook = module.exports = mongoose.model('Setbook', SetbookSchema);

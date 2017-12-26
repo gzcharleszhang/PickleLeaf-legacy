@@ -3,6 +3,7 @@ var router = express.Router();
 var session = require('express-session');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
+var mongoose = require('mongoose');
 
 /* GET book submission page */
 router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
