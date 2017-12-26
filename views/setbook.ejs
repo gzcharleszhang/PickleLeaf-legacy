@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+<% include templates/navigation.ejs%>
+<% include templates/flash.ejs %>
+<h3 class="page-header">Book: <%= booktitle %></h3>
+<div>
+    <h5>
+        Course: <%=course%>
+    </h5>
+    <h5>
+        Author: <%=author%>
+    </h5>
+    <img src='<%=imageURL%>' alt="Book Image" style="width:500px;height:600px;">
+    <a href='<%="/submit/book/" + setbookid%>'>Sell this book</a>
+</div>
+<h3 class="page-header">Book Listing</h3>
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>Seller</th>
+        <th>Price</th>
+        <th>Availability</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (books.length > 0){ %>
+    <% books.forEach(function(book){ %>
+    <tr>
+        <td>
+            <%=book.username%>
+        </td>
+        <td>
+            <%=book.price%>
+        </td>
+        <td>
+            <% if (book.sold){%>
+            Book Sold
+            <%}else{%>
+            Available
+            <%}%>
+        </td>
+        <td>
+            <a href='<%='/book/'+book._id%>'>view</a>
+        </td>
+    </tr>
+    <%})%>
+    <%}%>
+    </tbody>
+</table>
+</body>
+</html>

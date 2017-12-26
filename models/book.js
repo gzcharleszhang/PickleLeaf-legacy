@@ -6,16 +6,10 @@ var BookSchema = mongoose.Schema({
         type: String,
         index:true
     },
-    title: {
-        type: String
-    },
-    author: {
-        type: String
-    },
-    course: {
-        type: String
-    },
     price: {
+        type: String
+    },
+    setbookID: {
         type: String
     },
     description: {

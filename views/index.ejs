@@ -15,8 +15,7 @@
             <tr>
                 <th>Title</th>
                 <th>Course</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th>Author</th>
             </tr>
         </thead>
         <tbody>
@@ -24,20 +23,13 @@
             <% books.forEach(function(book){ %>
             <tr>
                 <td>
-                    <a href='<%='/book/'+book._id%>'><%=book.title%></a>
+                    <a href='<%='/setbook/'+book._id%>'><%=book.title%></a>
                 </td>
                 <td>
                     <%=book.course%>
                 </td>
                 <td>
-                    <%=book.price%>
-                </td>
-                <td>
-                    <% if (book.sold){%>
-                        Sold
-                    <%}else{%>
-                        Selling
-                    <%}%>
+                    <%=book.author%>
                 </td>
             </tr>
             <%})%>
