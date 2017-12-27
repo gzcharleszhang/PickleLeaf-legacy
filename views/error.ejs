@@ -1,3 +1,17 @@
-<h1><%= message %></h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+<% include templates/navigation.ejs%>
+<% include templates/flash.ejs %>
+<h3 class="page-header"><%= message %></h3>
 <h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<pre><%=error.stack %></pre>
+</body>
+</html>
+
