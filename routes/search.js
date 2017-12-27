@@ -7,10 +7,12 @@ var Setbook = require('../models/setbook');
 
 // GET search page
 router.get('/', ensureAuthenticated, function(req, res, next){
-    res.render('search', {
-        title: 'UW Textbooks',
-        errors: false,
-        setbooks: {}
+    Setbook.find({}, function(error, setbooks){
+        res.render('search', {
+            title: 'UW Textbooks',
+            errors: false,
+            setbooks: setbooks
+        })
     })
 });
 
@@ -54,11 +56,23 @@ router.post('/', ensureAuthenticated, function(req, res, next){
         Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
             if (err) return handleError(err);
 
-            res.render('search', {
-                title: 'UW Textbooks',
-                errors: false,
-                setbooks: setbooks
-            })
+            if (setbooks == null){
+                Setbook.find({}, function(error, setbooks){
+                    res.render('search', {
+                        title: 'UW Textbooks',
+                        errors: false,
+                        setbooks: setbooks
+                    })
+                })
+            }else{
+                res.render('search', {
+                    title: 'UW Textbooks',
+                    errors: false,
+                    setbooks: setbooks
+                })
+            }
+
+
         })
 
     }

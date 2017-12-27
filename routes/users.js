@@ -56,6 +56,7 @@ router.post('/register', function(req, res, next) {
     }
 });
 
+// Local Strategy for user authentication
 passport.use(new LocalStrategy(
     function(username, password, done) {
         User.getUserByUsername(username, function(err, user){
@@ -110,33 +111,6 @@ router.get('/logout', ensureAuthenticated, function(req, res){
     res.redirect('/users/login');
 });
 
-
-function getBooks(books){
-    var newBooks = [];
-    if (books.length > 0){
-        console.log('hi1');
-
-        books.forEach(function(book){
-            var setbookID = book.setbookID;
-            Setbook.findById(setbookID, 'title course', function (err, setbook){
-                if (err) return handleError(err);
-
-                var temp = {
-                    title: setbook.title,
-                    price: book.price,
-                    description: book.description,
-                    sold: book.sold,
-                    setbookID: book.setbookID,
-                    _id: book._id,
-                    course: setbook.course
-                };
-                console.log('hi2');
-                newBooks.push(temp);
-            })
-        });
-    }
-    return newBooks;
-}
 
 
 // GET dashboard page

@@ -77,41 +77,50 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
 
     var errors = req.validationErrors();
 
-    if (errors) {
-        res.render('submit', {
-            title: 'UW Textbooks',
-            errors: errors
-        });
-    } else {
-        var newBook = new Book ({
-            price: price,
-            description: description,
-            username: username,
-            setbookID: setbookID,
-            sold: false
-        });
-        Book.createBook(newBook, function(err, book){
-            if(err) throw err;
-            console.log(book);
+    Setbook.findById(setbookID, function(err, setbook){
+        if (errors) {
+            res.render('submit', {
+                title: 'UW Textbooks',
+                errors: errors
+            });
+        } else if (setbook == null){
+            req.flash('error_msg', 'Book does not exist');
+            res.render('submit', {
+                title: 'UW Textbooks',
+                errors: false
+            });
+        } else {
+            var newBook = new Book ({
+                price: price,
+                description: description,
+                username: username,
+                setbookID: setbookID,
+                sold: false
+            });
+            Book.createBook(newBook, function(err, book){
+                if(err) throw err;
+                console.log(book);
 
 
-            Setbook.findById(setbookID, function (err, setbook) {
-                if (err) throw(err);
-
-                setbook.books = setbook.books.concat([book._id]);
-                setbook.save(function (err, updatedSetbook) {
+                Setbook.findById(setbookID, function (err, setbook) {
                     if (err) throw(err);
-                    console.log(updatedSetbook);
+
+                    setbook.books = setbook.books.concat([book._id]);
+                    setbook.save(function (err, updatedSetbook) {
+                        if (err) throw(err);
+                        console.log(updatedSetbook);
+                    });
                 });
+
             });
 
-        });
+            req.flash('success_msg', 'You have successfully submitted a book.');
+
+            res.redirect('/setbook/' + setbookID);
+        }
+    })
 
 
-        req.flash('success_msg', 'You have successfully submitted a book.');
-
-        res.redirect('/setbook/' + setbookID);
-    }
 });
 
 function ensureAuthenticated(req, res, next){
