@@ -8,11 +8,21 @@ var mongoose = require('mongoose');
 /* GET book submission page */
 router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
     var setbookID = req.params.setbookid;
-    res.render('submit', { 
-        title: 'UW Textbooks',
-        errors: false,
-        setbookID: setbookID
-    });
+    Setbook.findById(setbookID, function(err, setbook){
+        if (err){
+            res.render('error', {
+                message: 'Book not Found',
+                error: err,
+                title: 'UW Textbooks'
+            })
+        }else{
+            res.render('submit', {
+                title: 'UW Textbooks',
+                errors: false,
+                setbookID: setbookID
+            });
+        }
+    })
 });
 
 // GET setbook submission page
@@ -82,13 +92,7 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
             res.render('submit', {
                 title: 'UW Textbooks',
                 errors: errors
-            });
-        } else if (setbook == null){
-            req.flash('error_msg', 'Book does not exist');
-            res.render('submit', {
-                title: 'UW Textbooks',
-                errors: false
-            });
+            })
         } else {
             var newBook = new Book ({
                 price: price,
