@@ -25,7 +25,7 @@ router.post('/register', function(req, res, next) {
     // Validation
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches('@uwaterloo.ca');
+    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches(/\b(?:@uwaterloo.ca|@edu.uwaterloo.ca)\b/);
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
