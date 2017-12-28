@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
@@ -23,6 +22,8 @@
         <tbody>
         <% if (books.length > 0){ %>
             <% books.forEach(function(book){ %>
+            <!-- Checks for empty setbookid, TODO: find better way to do this-->
+            <% if (book.setbookID) { %>
             <tr>
                 <td>
                     <a href='<%='/setbook/'+book.setbookID._id%>'><%=book.setbookID.title%></a>
@@ -44,6 +45,7 @@
                     <a href="<%='/book/'+book._id%>">view</a>
                 </td>
             </tr>
+            <% } %>
             <%})%>
         <%}%>
         </tbody>

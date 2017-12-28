@@ -116,14 +116,13 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
    var username = req.user.username;
-
+   console.log('sup');
     Book.find({username: username}).populate('setbookID').exec(function (err, books) {
-
-            res.render('dashboard', {
-                title: 'UW Textbooks',
-                books: books,
-                username: username
-            })
+        res.render('dashboard', {
+            title: 'UW Textbooks',
+            books: books,
+            username: username
+        })
     })
 });
 
