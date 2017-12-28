@@ -23,6 +23,8 @@
         <tbody>
         <% if (books.length > 0){ %>
             <% books.forEach(function(book){ %>
+            <!-- Checks for empty setbookid, TODO: find better way to do this-->
+            <% if (book.setbookID) { %>
             <tr>
                 <td>
                     <a href='<%='/setbook/'+book.setbookID._id%>'><%=book.setbookID.title%></a>
@@ -44,6 +46,7 @@
                     <a href="<%='/book/'+book._id%>">view</a>
                 </td>
             </tr>
+            <% } %>
             <%})%>
         <%}%>
         </tbody>

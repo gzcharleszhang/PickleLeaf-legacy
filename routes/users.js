@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
+//var Soldbook = require('../models/soldbook');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
@@ -25,7 +26,7 @@ router.post('/register', function(req, res, next) {
     // Validation
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches('@uwaterloo.ca');
+    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches(/\b(?:@uwaterloo.ca|@edu.uwaterloo.ca)\b/);
     req.checkBody('username', 'Username is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
@@ -116,14 +117,13 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
    var username = req.user.username;
-
+   console.log('sup');
     Book.find({username: username}).populate('setbookID').exec(function (err, books) {
-
-            res.render('dashboard', {
-                title: 'UW Textbooks',
-                books: books,
-                username: username
-            })
+        res.render('dashboard', {
+            title: 'UW Textbooks',
+            books: books,
+            username: username
+        })
     })
 });
 

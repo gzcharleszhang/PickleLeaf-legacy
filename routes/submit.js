@@ -3,6 +3,7 @@ var router = express.Router();
 var session = require('express-session');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
+//var Soldbook = require('../models/soldbook');
 var mongoose = require('mongoose');
 
 /* GET book submission page */
@@ -11,7 +12,7 @@ router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
     Setbook.findById(setbookID, function(err, setbook){
         if (err){
             res.render('error', {
-                message: 'Book not Found',
+                message: 'Book not found',
                 error: err,
                 title: 'UW Textbooks'
             })
