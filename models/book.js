@@ -10,7 +10,7 @@ var BookSchema = mongoose.Schema({
         index:true
     },
     price: {
-        type: String
+        type: Number
     },
     setbookID: {
         type: Schema.Types.ObjectId,

@@ -60,6 +60,7 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
             author: author,
             course: course,
             imageURL: imageURL,
+            min_price: -1,
             books: []
         });
 
@@ -110,6 +111,9 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
                     if (err) throw(err);
 
                     setbook.books = setbook.books.concat([book._id]);
+                    if (setbook.min_price === -1 || price < setbook.min_price){
+                        setbook.min_price = price;
+                    }
                     setbook.save(function (err, updatedSetbook) {
                         if (err) throw(err);
                         console.log(updatedSetbook);

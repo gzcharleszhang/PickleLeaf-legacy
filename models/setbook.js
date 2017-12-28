@@ -16,6 +16,9 @@ var SetbookSchema = mongoose.Schema({
     imageURL: {
         type: String
     },
+    min_price: {
+        type: Number
+    },
     books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Book"

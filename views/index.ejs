@@ -16,6 +16,7 @@
                 <th>Title</th>
                 <th>Course</th>
                 <th>Author</th>
+                <th>Lowest Price</th>
                 <th>No. of Listings</th>
             </tr>
         </thead>
@@ -31,6 +32,9 @@
                 </td>
                 <td>
                     <%=book.author%>
+                </td>
+                <td>
+                    <%=book.min_price%>
                 </td>
                 <td>
                     <%=book.books.length%>
