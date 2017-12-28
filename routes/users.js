@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
+//var Soldbook = require('../models/soldbook');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
