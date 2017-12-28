@@ -7,7 +7,6 @@ var Setbook = require('../models/setbook');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Setbook.find({}, function (err, books) {
-    console.log(books);
     res.render('index', {
       title: 'UW Textbooks',
       books: books

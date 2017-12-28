@@ -88,6 +88,7 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+// GET login page
 router.get('/login', function(req, res, next) {
     res.render('login', {
         title: 'UW Textbooks'
@@ -98,7 +99,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login',
     passport.authenticate('local', {failureRedirect:'/users/login', failureFlash: true}),
     function(req, res) {
-        req.flash('success_msg', 'You are logged in!');
+        req.flash('success_msg', 'You are now logged in!');
         res.redirect('/');
 
 });
@@ -107,17 +108,15 @@ router.post('/login',
 router.get('/logout', ensureAuthenticated, function(req, res){
     req.logout();
 
-    req.flash('success_msg', 'You are logged out');
+    req.flash('success_msg', 'You successfully logged out!');
 
     res.redirect('/users/login');
 });
 
-
-
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
-   var username = req.user.username;
-   console.log('sup');
+    var username = req.user.username;
+
     Book.find({username: username}).populate('setbookID').exec(function (err, books) {
         res.render('dashboard', {
             title: 'UW Textbooks',

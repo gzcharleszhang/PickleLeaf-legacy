@@ -5,19 +5,9 @@ var Schema = mongoose.Schema;
 
 // Soldbook Schema
 var SoldbookSchema = mongoose.Schema({
-    username: {
-        type: String,
-        index:true
-    },
-    price: {
-        type: Number
-    },
     setbookID: {
         type: Schema.Types.ObjectId,
         ref: "Setbook"
-    },
-    description: {
-        type: String
     },
     buyer: {
         type: String
