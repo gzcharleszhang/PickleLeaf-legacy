@@ -17,15 +17,10 @@ router.get('/', ensureAuthenticated, function(req, res, next){
 });
 
 // POST search page
-router.post('/', ensureAuthenticated, function(req, res, next){
+router.post('/', function(req, res, next){
     var keyword = new RegExp(req.body.keyword, 'i');
-
-
-    // Validation
-    req.checkBody('keyword', 'The search field cannot be empty').notEmpty();
-
+    console.log(req.body.homepage);
     var errors = req.validationErrors();
-
     if (errors) {
         res.render('search', {
             title: 'UW Textbooks',
@@ -33,31 +28,11 @@ router.post('/', ensureAuthenticated, function(req, res, next){
             setbooks: {}
         });
     } else {
-        /*
-        Setbook.find({title: keyword}, 'title author course _id', function (err, setbooks_title) {
-            if (err) return handleError(err);
-
-            Setbook.find({author: keyword}, 'title author course _id', function (err, setbooks_author) {
-                if (err) return handleError(err);
-
-                Setbook.find({course: keyword}, 'title author course _id', function (err, setbooks_course) {
-                    if (err) return handleError(err);
-
-                    var temp = setbooks_course.concat(setbooks_author);
-                    var setbooks = temp.concat(setbooks_title);
-                    res.render('search', {
-                        title: 'UW Textbooks',
-                        errors: false,
-                        setbooks: setbooks
-                    })
-                });
-            });
-        }); */
         Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
             if (err) return handleError(err);
 
-            if (setbooks == null){
-                Setbook.find({}, function(error, setbooks){
+            if (setbooks == null) {
+                Setbook.find({}, function (error, setbooks) {
                     res.render('search', {
                         title: 'UW Textbooks',
                         errors: false,
@@ -65,19 +40,49 @@ router.post('/', ensureAuthenticated, function(req, res, next){
                     })
                 })
             }else{
+
                 res.render('search', {
                     title: 'UW Textbooks',
                     errors: false,
                     setbooks: setbooks
                 })
             }
-
-
         })
-
     }
+});
 
+// POST search page
+router.post('/home', function(req, res, next){
+    var keyword = new RegExp(req.body.keyword, 'i');
+    console.log(req.body.homepage);
+    var errors = req.validationErrors();
+    if (errors) {
+        res.render('search', {
+            title: 'UW Textbooks',
+            errors: errors,
+            setbooks: {}
+        });
+    } else {
+        Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
+            if (err) return handleError(err);
 
+            if (setbooks == null) {
+                Setbook.find({}, function (error, setbooks) {
+                    res.render('search', {
+                        title: 'UW Textbooks',
+                        errors: false,
+                        setbooks: setbooks
+                    })
+                })
+            }else{
+
+                res.render('index', {
+                    title: 'UW Textbooks',
+                    books: setbooks
+                })
+            }
+        })
+    }
 });
 
 function ensureAuthenticated(req, res, next){

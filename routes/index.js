@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
   Setbook.find({}, function (err, books) {
     res.render('index', {
       title: 'UW Textbooks',
-      books: books
+      books: books,
+        homepage: true
     })
   })
 });
