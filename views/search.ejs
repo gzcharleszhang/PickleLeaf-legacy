@@ -9,23 +9,31 @@
 <body>
 <% include templates/navigation.ejs%>
 <% if (errors.length > 0){ %>
-<% errors.forEach(function(item){ %>
-<div class="alert alert-danger"><%=item.msg%></div>
-<%})%>
+    <% errors.forEach(function(item){ %>
+        <div class="alert alert-danger"><%=item.msg%></div>
+    <%})%>
 <%}%>
 <% include templates/flash.ejs %>
+
 <h3 class="page-header">Search Existing Textbooks</h3>
 <form method="post" action="/search">
     <div class="form-group text-center">
-        <label>Search:</label>
         <input type="text" class="form-control" name="keyword" placeholder="Search book titles, course names, authors...">
     </div>
     <div class="form-group text-center button">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+
+<div class="card text-center">
+    <div class="card-body">
+        <p class="card-text">Don't see the book you want to sell?</p>
+        <a href="/submit/setbook" class="btn btn-info">Submit a Textbook Request</a>
+    </div>
+</div>
+
 <h3 class="page-header">Book Listing</h3>
-<table class="table table-striped">
+<table class="table table-striped text-center">
     <thead class="thead-dark">
     <tr>
         <th>Title</th>
