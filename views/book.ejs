@@ -9,27 +9,47 @@
 <body>
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
-    <h3 class="page-header">Book: <%= book_title %></h3>
-    <div>
-        <p>
-            Course: <%=course%>
-        </p>
-        <p>
-            Author: <%=author%>
-        </p>
-        <p>
-            Price: <%=price%>
-        </p>
-        <p>
-            Seller: <%=seller%>
-        </p>
-        <p>
-            Availability: <%=avail%>
-        </p>
-        <p>
-            Description: <%=description%>
-        </p>
-        <img src='<%=imageURL%>' alt="Book Image" style="width:500px;height:600px;">
+    <div class="row">
+        <div class="col-md-4 offset-md-2">
+            <div class="card text-center">
+                <div class="card-body">
+                    <img src='<%=imageURL%>' alt="Book Image" style="width:300px;height:400px;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><%= book_title %></h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <%=description%>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Course:</strong> <%=course%>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Author:</strong> <%=author%>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Price:</strong> <%=price%>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Seller:</strong> <%=seller%>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Availability:</strong> <%=avail%>
+                    </li>
+                </ul>
+                    <!-- TODO: Link the buttons -->
+                    <a href="#" class="btn btn-primary">Purchase</a>
+                    <a href="#" class="btn btn-secondary">Sell this book</a>
+            </div>
+        </div>  
     </div>
+
 </body>
 </html>
