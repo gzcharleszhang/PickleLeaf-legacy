@@ -32,29 +32,41 @@ router.post('/register', function(req, res, next) {
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
     var errors = req.validationErrors();
+    User.find({username: username}, function(err, username_exist){
+        User.find({email: email}, function (err, email_exist){
+            if(errors) {
+                res.render('register', {
+                    title: 'UW Textbooks',
+                    errors: errors
+                });
+            } else if (username_exist != null) {
+                req.flash('error_msg', 'Username already exists');
 
-    if(errors){
-        res.render('register',{
-            title: 'UW Textbooks',
-            errors: errors
-        });
-    } else {
-        var newUser = new User({
-            name: name,
-            email: email,
-            username: username,
-            password: password
-        });
+                res.redirect('/users/register');
+            } else if (email_exit != null){
+                req.flash('error_msg', 'Email already exists');
+                res.redirect('/users/register')
+            } else {
+                var newUser = new User({
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: password
+                });
 
-        User.createUser(newUser, function(err, user){
-            if(err) throw err;
-            console.log(user);
-        });
+                User.createUser(newUser, function(err, user){
+                    if(err) throw err;
+                    console.log(user);
+                });
 
-        req.flash('success_msg', 'You are registered and can now login');
+                req.flash('success_msg', 'You are registered and can now login');
 
-        res.redirect('/users/login');
-    }
+                res.redirect('/users/login');
+            }
+        })
+
+    })
+
 });
 
 // Local Strategy for user authentication
