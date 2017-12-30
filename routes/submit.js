@@ -6,26 +6,6 @@ var Setbook = require('../models/setbook');
 //var Soldbook = require('../models/soldbook');
 var mongoose = require('mongoose');
 
-/* GET book submission page */
-router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
-    var setbookID = req.params.setbookid;
-    Setbook.findById(setbookID, function(err, setbook){
-        if (err){
-            res.render('error', {
-                message: 'Book not found',
-                error: err,
-                title: 'UW Textbooks'
-            })
-        }else{
-            res.render('submit', {
-                title: 'UW Textbooks',
-                errors: false,
-                setbookID: setbookID
-            });
-        }
-    })
-});
-
 // GET setbook submission page
 router.get('/setbook', ensureAuthenticated, function(req, res, next){
    res.render('submit_setbook', {
@@ -76,7 +56,64 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
     }
 });
 
-/* POST book submission */
+/* GET book purchasing page*/
+router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
+    var bookid = req.params.bookid;
+    var book = 
+
+  Book.findById(bookid).populate('setbookID').exec(function (err, book) {
+
+    if (err){
+        res.render('error', {
+            message: 'Book not Found',
+            error: err,
+            title: 'UW Textbooks'
+        })
+    }else{
+        if (book.sold){
+            avail = 'Book Sold!';
+        }else{
+            avail = 'Book Available!';
+        }
+        res.render('purchase', {
+            title: 'UW Textbooks',
+            book_id: bookid,
+            booktitle: book.setbookID.title,
+            author: book.setbookID.author,
+            course: book.setbookID.course,
+            price: book.price,
+            description: book.description,
+            seller: book.username,
+            avail: avail,
+            imageURL: book.setbookID.imageURL
+        })
+    }
+  });
+});
+
+/* GET book selling page */
+router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
+    var setbookID = req.params.setbookid;
+
+    Setbook.findById(setbookID).populate('books').exec(function(err, setbook){
+        if (err){
+            res.render('error', {
+                message: 'Book not found',
+                error: err,
+                title: 'UW Textbooks'
+            })
+        }else{
+            res.render('submit', {
+                title: 'UW Textbooks',
+                errors: false,
+                setbookID: setbookID,
+                booktitle: setbook.title
+            });
+        }
+    })
+});
+
+/* POST book selling */
 router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
     var price = req.body.price;
     var description = req.body.description;

@@ -66,9 +66,9 @@ router.get('/book/:bookid', function(req, res, next){
         console.log(book.setbookID);
 
         if (book.sold){
-            avail = 'Book Sold';
+            avail = 'Book Sold!';
         }else{
-            avail = 'Book Available';
+            avail = 'Book Available!';
         }
         res.render('book', {
             title: 'UW Textbooks',
@@ -83,8 +83,6 @@ router.get('/book/:bookid', function(req, res, next){
             imageURL: book.setbookID.imageURL
         })
     }
-
-
   });
 });
 
