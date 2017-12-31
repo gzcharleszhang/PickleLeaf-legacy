@@ -41,12 +41,14 @@
                         <strong>Seller:</strong> <%=seller%>
                     </li>
                     <li class="list-group-item">
-                        <strong>Availability:</strong> <%=avail%>
+                        <strong>Availability:</strong> <<%=avail%>
                     </li>
                 </ul>
-                    <!-- TODO: Link the the purchase button to buy view -->
+                <!-- Only shown if book is up for sale -->
+                <% if (!sold){ %>
                     <a href='<%="/submit/purchase/" + book_id%>' class="btn btn-primary">Purchase</a>
-                    <a href='<%="/submit/book/" + book_id%>' class="btn btn-secondary">Sell this book</a>
+                <%}%>
+                <a href='<%="/submit/book/" + book_id%>' class="btn btn-secondary">Sell this book</a>
             </div>
         </div>  
     </div>
