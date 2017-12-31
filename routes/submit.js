@@ -132,7 +132,7 @@ router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
 
             // Creates new sold book in db, default date is current time
             var newSoldbook = new Soldbook({
-                setbookID: bookid,
+                bookID: bookid,
                 buyer: buyer
             });
             Soldbook.createBook(newSoldbook, function(err, soldbook) {

@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
-var Setbook = require('./setbook');
+var Book = require('./book');
 var Schema = mongoose.Schema;
 
 
 // Soldbook Schema
 var SoldbookSchema = mongoose.Schema({
-    setbookID: {
+    bookID: {
         type: Schema.Types.ObjectId,
-        ref: "Setbook"
+        ref: "Book"
     },
     buyer: {
         type: String
