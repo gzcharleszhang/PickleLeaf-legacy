@@ -80,6 +80,7 @@ router.get('/book/:bookid', function(req, res, next){
             description: book.description,
             seller: book.username,
             avail: avail,
+            sold: book.sold,
             imageURL: book.setbookID.imageURL
         })
     }

@@ -3,7 +3,7 @@ var router = express.Router();
 var session = require('express-session');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
-//var Soldbook = require('../models/soldbook');
+var Soldbook = require('../models/soldbook');
 var mongoose = require('mongoose');
 
 // GET setbook submission page
@@ -31,7 +31,7 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
     var errors = req.validationErrors();
 
     if (errors) {
-        res.render('submit', {
+        res.render('submit_setbook', {
             title: 'UW Textbooks',
             errors: errors
         });
@@ -59,36 +59,93 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
 /* GET book purchasing page*/
 router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
     var bookid = req.params.bookid;
-    var book = 
 
-  Book.findById(bookid).populate('setbookID').exec(function (err, book) {
+    Book.findById(bookid).populate('setbookID').exec(function (err, book) {
 
-    if (err){
-        res.render('error', {
-            message: 'Book not Found',
-            error: err,
-            title: 'UW Textbooks'
-        })
-    }else{
-        if (book.sold){
-            avail = 'Book Sold!';
+        if (err){
+            res.render('error', {
+                message: 'Book not Found',
+                error: err,
+                title: 'UW Textbooks'
+            })
         }else{
-            avail = 'Book Available!';
+            if (book.sold){
+                avail = 'Book Sold!';
+            }else{
+                avail = 'Book Available!';
+            }
+            res.render('purchase', {
+                title: 'UW Textbooks',
+                errors: false,
+                book_id: bookid,
+                booktitle: book.setbookID.title,
+                author: book.setbookID.author,
+                course: book.setbookID.course,
+                price: book.price,
+                description: book.description,
+                seller: book.username,
+                avail: avail,
+                imageURL: book.setbookID.imageURL
+            })
         }
-        res.render('purchase', {
-            title: 'UW Textbooks',
-            book_id: bookid,
-            booktitle: book.setbookID.title,
-            author: book.setbookID.author,
-            course: book.setbookID.course,
-            price: book.price,
-            description: book.description,
-            seller: book.username,
-            avail: avail,
-            imageURL: book.setbookID.imageURL
-        })
-    }
-  });
+    });
+});
+
+/* POST book purchasing page */
+router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
+    var bookid = req.params.bookid;
+    var buyer = req.user.username;
+
+    // TODO: use message and send to seller
+    // Validation
+    req.checkBody('message', 'Personal message is required to notify seller.').notEmpty();
+
+    var errors = req.validationErrors();
+
+
+    Book.findById(bookid).populate('setbookID').exec(function (err, book) {
+        if (errors) {
+            console.log('lol1');
+            res.render('purchase', {
+                title: 'UW Textbooks',
+                book_id: bookid,
+                booktitle: book.setbookID.title,
+                author: book.setbookID.author,
+                course: book.setbookID.course,
+                price: book.price,
+                description: book.description,
+                seller: book.username,
+                avail: avail,
+                imageURL: book.setbookID.imageURL,
+                errors: errors
+            });
+        } else {
+
+            // Changes book to sold status
+            if (!book.sold){
+                book.sold = true;
+            }
+            book.save(function (err, updatedBook) {
+                if (err) throw(err);
+                console.log(updatedBook);
+            });
+
+            // Creates new sold book in db, default date is current time
+            var newSoldbook = new Soldbook({
+                setbookID: bookid,
+                buyer: buyer
+            });
+            Soldbook.createBook(newSoldbook, function(err, soldbook) {
+                if(err) throw err;
+                console.log(soldbook);
+            });
+
+            req.flash('success_msg', 'You have successfully sent a book purchase request. The seller will notify you.');
+
+            /* TODO: Add to purchase history/ populate books purchased by buyer */
+            res.redirect('/users/dashboard/');
+        }
+    });
 });
 
 /* GET book selling page */
@@ -130,6 +187,8 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
         if (errors) {
             res.render('submit', {
                 title: 'UW Textbooks',
+                booktitle: setbook.title,
+                setbookID: setbookID,
                 errors: errors
             })
         } else {
