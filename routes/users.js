@@ -39,11 +39,12 @@ router.post('/register', function(req, res, next) {
                     title: 'UW Textbooks',
                     errors: errors
                 });
-            } else if (username_exist != null) {
+            } else if (username_exist.length > 0) {
+                console.log(username_exist);
                 req.flash('error_msg', 'Username already exists');
 
                 res.redirect('/users/register');
-            } else if (email_exit != null){
+            } else if (email_exist.length > 0){
                 req.flash('error_msg', 'Email already exists');
                 res.redirect('/users/register')
             } else {
@@ -51,7 +52,10 @@ router.post('/register', function(req, res, next) {
                     name: name,
                     email: email,
                     username: username,
-                    password: password
+                    password: password,
+                    booksown: [],
+                    bookspurchased: [],
+                    cart: []
                 });
 
                 User.createUser(newUser, function(err, user){

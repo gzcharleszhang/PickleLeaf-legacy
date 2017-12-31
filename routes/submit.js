@@ -4,6 +4,7 @@ var session = require('express-session');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
 var Soldbook = require('../models/soldbook');
+var User = require('../models/user');
 var mongoose = require('mongoose');
 
 // GET setbook submission page
@@ -119,6 +120,11 @@ router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
                 imageURL: book.setbookID.imageURL,
                 errors: errors
             });
+        } else if (err) {
+            res.render('error', {
+                message: 'Book not found',
+                error: err
+            })
         } else {
 
             // Changes book to sold status
@@ -138,6 +144,14 @@ router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
             Soldbook.createBook(newSoldbook, function(err, soldbook) {
                 if(err) throw err;
                 console.log(soldbook);
+            });
+
+            User.findById(req.user._id, function(err, user){
+                user.bookspurchased = user.bookspurchased.concat([bookid]);
+                user.save(function (err, updatedUser){
+                    if (err) throw(err);
+                    console.log(updatedUser);
+                })
             });
 
             req.flash('success_msg', 'You have successfully sent a book purchase request. The seller will notify you.');
@@ -199,23 +213,28 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
                 setbookID: setbookID,
                 sold: false
             });
+
             Book.createBook(newBook, function(err, book){
                 if(err) throw err;
                 console.log(book);
 
-
-                Setbook.findById(setbookID, function (err, setbook) {
+                setbook.books = setbook.books.concat([book._id]);
+                if (setbook.min_price === -1 || price < setbook.min_price){
+                    setbook.min_price = price;
+                }
+                setbook.save(function (err, updatedSetbook) {
                     if (err) throw(err);
-
-                    setbook.books = setbook.books.concat([book._id]);
-                    if (setbook.min_price === -1 || price < setbook.min_price){
-                        setbook.min_price = price;
-                    }
-                    setbook.save(function (err, updatedSetbook) {
-                        if (err) throw(err);
-                        console.log(updatedSetbook);
-                    });
+                    console.log(updatedSetbook);
                 });
+
+                User.findById(req.user._id, function(err, user){
+                    console.log(user);
+                    console.log(user.booksown);
+                    user.booksown = user.booksown.concat([book._id]);
+                    user.save(function (err, updatedUser){
+                        console.log(updatedUser);
+                    })
+                })
 
             });
 

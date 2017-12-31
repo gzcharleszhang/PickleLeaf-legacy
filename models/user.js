@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var Book = require('./book');
+var Schema = mongoose.Schema;
 
 // User Schema
 var UserSchema = mongoose.Schema({
@@ -15,7 +17,19 @@ var UserSchema = mongoose.Schema({
     },
     name: {
         type: String
-    }
+    },
+    booksown: [{
+        type: Schema.Types.ObjectId,
+        ref: "Book"
+    }],
+    bookspurchased: [{
+        type: Schema.Types.ObjectId,
+        ref: "Book"
+    }],
+    cart: [{
+        type: Schema.Types.ObjectId,
+        ref: "Book"
+    }]
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
