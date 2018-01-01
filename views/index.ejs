@@ -42,7 +42,11 @@
                     <%=book.author%>
                 </td>
                 <td>
+                    <% if (book.min_price === -1){%>
+                        N/A
+                    <%}else{%>
                     <%=book.min_price%>
+                    <%}%>
                 </td>
                 <td>
                     <%=book.books.length%>

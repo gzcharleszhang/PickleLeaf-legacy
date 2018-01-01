@@ -58,7 +58,11 @@
             <%=book.author%>
         </td>
         <td>
-            <%=book.min_price%>
+            <% if (book.min_price === -1){%>
+            N/A
+            <%}else{%>
+                <%=book.min_price%>
+            <%}%>
         </td>
         <td>
             <a href='<%='/submit/book/' +book._id%>'>sell</a>
