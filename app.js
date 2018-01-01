@@ -17,7 +17,7 @@ var flash = require('connect-flash');
 var index = require('./routes/index');
 var submit = require('./routes/submit');
 var users = require('./routes/users');
-var search = require('./routes/search');
+var sell = require('./routes/sell');
 var app = express();
 
 // MongoDB
@@ -59,7 +59,7 @@ app.use(function(req, res, next){
 app.use('/', index);
 app.use('/submit', submit);
 app.use('/users', users);
-app.use('/search', search);
+app.use('/sell', sell);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
