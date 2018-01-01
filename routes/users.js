@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
-//var Soldbook = require('../models/soldbook');
+var Soldbook = require('../models/soldbook');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
@@ -131,14 +131,20 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
-    var username = req.user.username;
 
-    Book.find({username: username}).populate('setbookID').exec(function (err, books) {
-        res.render('dashboard', {
-            title: 'UW Textbooks',
-            books: books,
-            username: username
+    Book.find({username: req.user.username}).populate('setbookID').exec(function (err, booksown) {
+        Soldbook.find({buyer: req.user.username}).populate({
+            path: 'bookID',
+            populate: {path: 'setbookID'}
+        }).exec(function (err, bookspurchased){
+            res.render('dashboard', {
+                title: 'UW Textbooks',
+                books: booksown,
+                bookspurchased: bookspurchased,
+                username: req.user.username
+            })
         })
+
     })
 });
 

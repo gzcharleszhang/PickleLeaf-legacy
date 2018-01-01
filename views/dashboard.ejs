@@ -50,5 +50,43 @@
         </tbody>
     </table>
     <h3 class="page-header">Books Purchased</h3>
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (bookspurchased.length > 0){ %>
+        <% bookspurchased.forEach(function(book){ %>
+        <tr>
+            <td>
+                <a href='<%='/setbook/'+book.bookID.setbookID._id%>'><%=book.bookID.setbookID.title%></a>
+            </td>
+            <td>
+                <%=book.bookID.setbookID.course%>
+            </td>
+            <td>
+                <%=book.bookID.price%>
+            </td>
+            <td>
+                <% if (book.bookID.sold){%>
+                Sold
+                <%}else{%>
+                Selling
+                <%}%>
+            </td>
+            <td>
+                <a href="<%='/book/'+book.bookID._id%>">view</a>
+            </td>
+        </tr>
+        <%})%>
+        <%}%>
+        </tbody>
+    </table>
 </body>
 </html>
