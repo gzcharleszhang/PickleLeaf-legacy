@@ -21,6 +21,10 @@ var BookSchema = mongoose.Schema({
     },
     sold: {
         type: Boolean
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
