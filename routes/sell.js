@@ -86,41 +86,6 @@ router.get('/', ensureAuthenticated, function(req, res, next){
 
 });
 
-
-// POST search page
-router.post('/home', function(req, res, next){
-    var keyword = new RegExp(req.body.keyword, 'i');
-    console.log(req.body.homepage);
-    var errors = req.validationErrors();
-    if (errors) {
-        res.render('search', {
-            title: 'UW Textbooks',
-            errors: errors,
-            setbooks: {}
-        });
-    } else {
-        Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
-            if (err) return handleError(err);
-
-            if (setbooks == null) {
-                Setbook.find({}, function (error, setbooks) {
-                    res.render('search', {
-                        title: 'UW Textbooks',
-                        errors: false,
-                        setbooks: setbooks
-                    })
-                })
-            }else{
-
-                res.render('index', {
-                    title: 'UW Textbooks',
-                    books: setbooks
-                })
-            }
-        })
-    }
-});
-
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();

@@ -31,3 +31,7 @@ form {
 .nav-space{
     padding-top: 5px;
 }
+
+.td, .td:hover {
+    color: white;
+}

@@ -6,12 +6,78 @@ var Setbook = require('../models/setbook');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Setbook.find({}, function (err, books) {
-    res.render('index', {
-      title: 'UW Textbooks',
-      books: books
-    })
-  })
+    var key = req.query.search;
+    var sort = req.query.sort;
+    if (key == null){
+        if (sort == null){
+            Setbook.find({}, function(error, setbooks){
+                res.render('index', {
+                    title: 'UW Textbooks',
+                    books: setbooks,
+                    keyword: null
+                })
+            })
+        } else {
+            Setbook.find().sort(sort).exec(function(error, setbooks){
+                res.render('index', {
+                    title: 'UW Textbooks',
+                    books: setbooks,
+                    keyword: null
+                })
+            })
+        }
+
+    } else {
+        var keyword = new RegExp(key, 'i');
+        if (sort == null){
+
+            Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
+                if (err) return handleError(err);
+
+                if (setbooks == null) {
+                    Setbook.find({}, function (error, setbooks) {
+                        res.render('index', {
+                            title: 'UW Textbooks',
+                            books: setbooks,
+                            keyword: null
+                        })
+                    })
+                }else{
+
+                    res.render('index', {
+                        title: 'UW Textbooks',
+                        books: setbooks,
+                        keyword: key
+                    })
+                }
+            })
+        } else {
+            Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}).sort(sort).exec(function(err, setbooks){
+                if (err) return handleError(err);
+
+                if (setbooks == null) {
+                    Setbook.find({}, function (error, setbooks) {
+                        res.render('index', {
+                            title: 'UW Textbooks',
+                            errors: false,
+                            books: setbooks,
+                            keyword: null
+                        })
+                    })
+                }else{
+
+                    res.render('index', {
+                        title: 'UW Textbooks',
+                        errors: false,
+                        books: setbooks,
+                        keyword: key
+                    })
+                }
+            })
+
+        }
+
+    }
 });
 
 

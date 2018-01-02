@@ -10,9 +10,9 @@
   	<% include templates/navigation.ejs%>
   	<% include templates/flash.ejs %>
 	<h3 class="page-header">Welcome to <%= title %></h3>
-    <form method="post" action="/search/home">
+    <form method="get" action="/">
         <div class="form-group text-center">
-            <input type="text" class="form-control" name="keyword" placeholder="Search book titles, course names, authors...">
+            <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
         </div>
         <div class="form-group text-center button">
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -21,11 +21,39 @@
   	<table class="table table-striped text-center">
         <thead class="thead-dark">
             <tr>
-                <th>Title</th>
-                <th>Course</th>
-                <th>Author</th>
-                <th>Lowest Price</th>
-                <th>No. of Listings</th>
+                <% if (keyword == null){%>
+                <th>
+                    <a href='<%='?sort=title'%>' class="td">Title</a>
+                </th>
+                <th>
+                    <a href='<%='?sort=course'%>' class="td">Course</a>
+                </th>
+                <th>
+                    <a href='<%='?sort=author'%>' class="td">Author</a>
+                </th>
+                <th>
+                    <a href='<%='?sort=price'%>' class="td">Lowest Price</a>
+                </th>
+                <th>
+                    No. of Listings
+                </th>
+                <%} else {%>
+                <th>
+                    <a href='<%='?search='+keyword+'&sort=title'%>' class="td">Title</a>
+                </th>
+                <th>
+                    <a href='<%='?search='+keyword+'&sort=course'%>' class="td">Course</a>
+                </th>
+                <th>
+                    <a href='<%='?search='+keyword+'&sort=author'%>' class="td">Author</a>
+                </th>
+                <th>
+                    <a href='<%='?search='+keyword+'&sort=price'%>' class="td">Lowest Price</a>
+                </th>
+                <th>
+                    No. of Listings
+                </th>
+                <%}%>
             </tr>
         </thead>
         <tbody>
