@@ -131,12 +131,12 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
-
     Book.find({username: req.user.username}).populate('setbookID').exec(function (err, booksown) {
-        Soldbook.find({buyer: req.user.username}).populate({
+        Soldbook.find({buyer: req.user._id}).populate({
             path: 'bookID',
             populate: {path: 'setbookID'}
         }).exec(function (err, bookspurchased){
+            console.log(bookspurchased);
             res.render('dashboard', {
                 title: 'UW Textbooks',
                 books: booksown,
@@ -147,6 +147,72 @@ router.get('/dashboard', ensureAuthenticated, function(req, res, next){
 
     })
 });
+
+// GET shopping cart page
+router.get('/cart', ensureAuthenticated, function(req, res, next){
+   User.findById(req.user._id).populate({path: 'cart', populate: {path: 'setbookID'}}).exec(function (err, user){
+       res.render('cart', {
+           title: 'UW Textbooks',
+           books: user.cart
+       })
+   })
+});
+
+// POST shopping cart items
+router.post('/cart', ensureAuthenticated, purchaseBooks, function(req, res, next){
+
+    req.flash('success_msg', 'You have successfully sent a book purchase request. The seller will notify you.');
+
+    /* TODO: Add to purchase history/ populate books purchased by buyer */
+    res.redirect('/users/dashboard/');
+});
+
+function purchaseBooks(req, res, next){
+    var buyer = req.user._id;
+    User.findById(req.user._id, function(err, user){
+
+        user.cart.forEach(function (bookid){
+
+            Book.findById(bookid).exec(function (err, book) {
+
+
+                // Changes book to sold status
+                if (!book.sold){
+                    book.sold = true;
+                }
+                book.save(function (err, updatedBook) {
+                    if (err) throw(err);
+                    console.log(updatedBook);
+                });
+
+                // Creates new sold book in db, default date is current time
+                var newSoldbook = new Soldbook({
+                    bookID: bookid,
+                    buyer: buyer
+                });
+                Soldbook.createBook(newSoldbook, function(err, soldbook) {
+                    if(err) throw err;
+                    console.log(soldbook);
+                });
+
+                user.bookspurchased = user.bookspurchased.concat([bookid]);
+                user.save(function (err, updatedUser){
+                    if (err) throw(err);
+                    console.log(updatedUser);
+                });
+                console.log(user);
+
+            });
+        });
+        user.cart = [];
+        user.save(function (err, updatedUser){
+            if (err) throw(err);
+            console.log(updatedUser);
+        });
+        console.log(user);
+    });
+    return next();
+}
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){

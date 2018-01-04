@@ -99,67 +99,30 @@ router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
 
     // TODO: use message and send to seller
     // Validation
-    req.checkBody('message', 'Personal message is required to notify seller.').notEmpty();
+    //req.checkBody('message', 'Personal message is required to notify seller.').notEmpty();
 
-    var errors = req.validationErrors();
-
-
-    Book.findById(bookid).populate('setbookID').exec(function (err, book) {
-        if (errors) {
-            console.log('lol1');
-            res.render('purchase', {
-                title: 'UW Textbooks',
-                book_id: bookid,
-                booktitle: book.setbookID.title,
-                author: book.setbookID.author,
-                course: book.setbookID.course,
-                price: book.price,
-                description: book.description,
-                seller: book.username,
-                avail: avail,
-                imageURL: book.setbookID.imageURL,
-                errors: errors
-            });
-        } else if (err) {
+    //var errors = req.validationErrors();
+    Book.findById(bookid).exec(function (err, book){
+        if (err) {
             res.render('error', {
                 message: 'Book not found',
                 error: err
             })
         } else {
-
-            // Changes book to sold status
-            if (!book.sold){
-                book.sold = true;
-            }
-            book.save(function (err, updatedBook) {
-                if (err) throw(err);
-                console.log(updatedBook);
-            });
-
-            // Creates new sold book in db, default date is current time
-            var newSoldbook = new Soldbook({
-                bookID: bookid,
-                buyer: buyer
-            });
-            Soldbook.createBook(newSoldbook, function(err, soldbook) {
-                if(err) throw err;
-                console.log(soldbook);
-            });
-
             User.findById(req.user._id, function(err, user){
-                user.bookspurchased = user.bookspurchased.concat([bookid]);
+                user.cart = user.cart.concat([bookid]);
                 user.save(function (err, updatedUser){
                     if (err) throw(err);
                     console.log(updatedUser);
                 })
             });
 
-            req.flash('success_msg', 'You have successfully sent a book purchase request. The seller will notify you.');
+            req.flash('success_msg', 'Your book is now in your shopping cart.');
 
-            /* TODO: Add to purchase history/ populate books purchased by buyer */
-            res.redirect('/users/dashboard/');
+            res.redirect('/submit/purchase/'+bookid);
         }
     });
+
 });
 
 /* GET book selling page */
