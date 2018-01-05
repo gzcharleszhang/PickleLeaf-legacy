@@ -128,8 +128,6 @@ router.get('/book/:bookid', function(req, res, next){
         })
     }else{
 
-        console.log(book.setbookID);
-
         if (book.sold){
             avail = 'Sold';
         }else{
