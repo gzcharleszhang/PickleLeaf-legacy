@@ -71,9 +71,9 @@ router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
             })
         }else{
             if (book.sold){
-                avail = 'Book Sold!';
+                avail = 'Sold';
             }else{
-                avail = 'Book Available!';
+                avail = 'Available';
             }
             res.render('purchase', {
                 title: 'UW Textbooks',
