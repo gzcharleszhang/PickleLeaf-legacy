@@ -146,7 +146,8 @@ router.get('/book/:bookid', function(req, res, next){
             seller: book.username,
             avail: avail,
             sold: book.sold,
-            imageURL: book.setbookID.imageURL
+            imageURL: book.setbookID.imageURL,
+            setbook_id: book.setbookID._id
         })
     }
   });
