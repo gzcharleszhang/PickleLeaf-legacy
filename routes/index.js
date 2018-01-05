@@ -131,9 +131,9 @@ router.get('/book/:bookid', function(req, res, next){
         console.log(book.setbookID);
 
         if (book.sold){
-            avail = 'Book Sold!';
+            avail = 'Sold';
         }else{
-            avail = 'Book Available!';
+            avail = 'Available';
         }
         res.render('book', {
             title: 'UW Textbooks',
