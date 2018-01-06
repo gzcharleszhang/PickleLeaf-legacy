@@ -15,7 +15,7 @@
             <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
         </div>
         <div class="form-group text-center button">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
   	<table class="table table-striped text-center">
@@ -23,32 +23,32 @@
             <tr>
                 <% if (keyword == null){%>
                 <th>
-                    <a href='<%='?sort=title'%>' class="td">Title</a>
+                    <a href='<%="?sort=title"%>' class="td">Title</a>
                 </th>
                 <th>
-                    <a href='<%='?sort=course'%>' class="td">Course</a>
+                    <a href='<%="?sort=course"%>' class="td">Course</a>
                 </th>
                 <th>
-                    <a href='<%='?sort=author'%>' class="td">Author</a>
+                    <a href='<%="?sort=author"%>' class="td">Author</a>
                 </th>
                 <th>
-                    <a href='<%='?sort=price'%>' class="td">Lowest Price</a>
+                    <a href='<%="?sort=price"%>' class="td">Lowest Price</a>
                 </th>
                 <th>
                     No. of Listings
                 </th>
                 <%} else {%>
                 <th>
-                    <a href='<%='?search='+keyword+'&sort=title'%>' class="td">Title</a>
+                    <a href="<%='?search='+keyword+'&sort=title'%>" class="td">Title</a>
                 </th>
                 <th>
-                    <a href='<%='?search='+keyword+'&sort=course'%>' class="td">Course</a>
+                    <a href="<%='?search='+keyword+'&sort=course'%>" class="td">Course</a>
                 </th>
                 <th>
-                    <a href='<%='?search='+keyword+'&sort=author'%>' class="td">Author</a>
+                    <a href="<%='?search='+keyword+'&sort=author'%>" class="td">Author</a>
                 </th>
                 <th>
-                    <a href='<%='?search='+keyword+'&sort=price'%>' class="td">Lowest Price</a>
+                    <a href="<%='?search='+keyword+'&sort=price'%>" class="td">Lowest Price</a>
                 </th>
                 <th>
                     No. of Listings
@@ -61,7 +61,7 @@
             <% books.forEach(function(book){ %>
             <tr>
                 <td>
-                    <a href='<%='/setbook/'+book._id%>'><%=book.title%></a>
+                    <a href="<%='/setbook/'+book._id%>"><%=book.title%></a>
                 </td>
                 <td>
                     <%=book.course%>
@@ -73,7 +73,7 @@
                     <% if (book.min_price === -1){%>
                         N/A
                     <%}else{%>
-                    <%=book.min_price%>
+                    	$<%=book.min_price.toFixed(2)%>
                     <%}%>
                 </td>
                 <td>

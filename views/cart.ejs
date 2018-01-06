@@ -32,13 +32,13 @@
             <%=book.setbookID.course%>
         </td>
         <td>
-            <%=book.price%>
+            $<%=book.price.toFixed(2)%>
         </td>
         <td>
             <% if (book.sold){%>
-            Sold
+                Sold
             <%}else{%>
-            Available
+                Available
             <%}%>
         </td>
         <td>
