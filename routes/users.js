@@ -6,6 +6,7 @@ var User = require('../models/user');
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
 var Soldbook = require('../models/soldbook');
+var Rating = require('../models/rating');
 
 /* GET register page*/
 router.get('/register', function(req, res, next) {
@@ -213,6 +214,17 @@ function purchaseBooks(req, res, next){
     });
     return next();
 }
+
+// GET User profile
+router.get('/profile/:userid', function(req, res, next){
+    var userId = req.params.userId;
+   User.findById(userId, function(err, user){
+       Book.find({username: user.username}, function(err, books){
+           Rating.find({receiver: userId}).populate('')
+       })
+   })
+});
+
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
