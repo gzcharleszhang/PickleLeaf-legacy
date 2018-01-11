@@ -210,6 +210,13 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
 
 });
 
+// GET submit user rating page
+router.post('/rating', ensureAuthenticated, function(req, res, next){
+    res.render('submit_rating', {
+        title: 'UW Textbooks'
+    })
+});
+
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();

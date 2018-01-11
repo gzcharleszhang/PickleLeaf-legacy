@@ -217,11 +217,27 @@ function purchaseBooks(req, res, next){
 
 // GET User profile
 router.get('/profile/:userid', function(req, res, next){
-    var userId = req.params.userId;
+    var userId = req.params.userid;
    User.findById(userId, function(err, user){
-       Book.find({username: user.username}, function(err, books){
-           Rating.find({receiver: userId}).populate('')
-       })
+       console.log(user);
+       if (err || user == null){
+           res.render('error', {
+               title: 'UW Textbooks',
+               message: 'User does not exist'
+           })
+       } else {
+           Book.find({username: user.username}).populate('setbookID').exec(function(err, books){
+               Rating.find({receiver: userId}).populate('sender').exec(function(err, ratings){
+                   res.render('profile', {
+                       title: 'UW Textbooks',
+                       username: user.username,
+                       books: books,
+                       ratings: ratings,
+                       avatarURL: 'https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png'
+                   })
+               })
+           })
+       }
    })
 });
 
