@@ -244,7 +244,8 @@ router.get('/profile/:userid', function(req, res, next){
 // GET User settings
 router.get('/settings', ensureAuthenticated, function(req, res, next) {
     res.render('settings', {
-        title: 'UW Textbooks'
+        title: 'UW Textbooks',
+        errors: false
     })
 });
 
@@ -256,46 +257,41 @@ router.post('/settings/changepass', ensureAuthenticated, function(req, res, next
     var newpass2 = req.body.newpass2;
 
     req.checkBody('email', 'Email is required').notEmpty();
-    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches(/\b(?:@uwaterloo.ca|@edu.uwaterloo.ca)\b/);
-    req.checkBody('password', 'Old password is required').notEmpty();
+    req.checkBody('password', 'Current password is required').notEmpty();
     req.checkBody('newpass', 'New password is required').notEmpty();
-    req.checkBody('newpass2', 'New passwords do not match').equals(req.body.newpass);
+    req.checkBody('newpass2', 'New passwords do not match. Please try again.').equals(req.body.newpass);
+    req.checkBody('email', 'Email is incorrect. Please try again.').equals(req.user.email);
 
     var errors = req.validationErrors();
 
     User.getUserByUsername(req.user.username, function(err, user){
-        User.find({email: email}, function (err, email_exist){
-            if (errors){
-                res.render('settings', {
-                    title: 'UW Textbooks',
-                    errors: errors
-                })
-            } 
-            else if (email_exist.length == 0) {
-                req.flash('error_msg', 'Email incorrect. Please try again.');
-                res.redirect('/users/settings')
-            }
-            else {
-                User.comparePassword(password, user.password, function(err, isMatch){
-                    if(err) throw err;
-                    if(isMatch){
-                        User.changePassword(user.username, newpass, function(err, user){
-                            if(err) throw err;
-                            console.log(user);
-                        });
+        if (errors){
+            res.render('settings', {
+                title: 'UW Textbooks',
+                errors: errors
+            })
+        }
+        else { 
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    User.changePassword(user.username, newpass, function(err, user){
+                        if(err) throw err;
+                        console.log(user);
+                    });
 
-                        req.flash('success_msg', 'You successfully changed your password. Please login again.');
+                    req.flash('success_msg', 'You successfully changed your password. Please login again.');
 
-                        req.logout();
-                        res.redirect('/users/login');
-                    } else {
-                        req.flash('error_msg', 'Password incorrect. Please try again.');
-                        res.redirect('/users/settings')
-                    }
-                });
-                
-            }
-        })
+                    req.logout();
+                    res.redirect('/users/login');
+                } else {
+                    console.log("lol");
+
+                    req.flash('error_msg', 'Password incorrect. Please try again.');
+                    res.redirect('/users/settings');
+                }
+            });
+        }
     })
 });
 
