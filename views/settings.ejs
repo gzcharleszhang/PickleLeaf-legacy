@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+</head>
+
+<body>
+	<% include templates/navigation.ejs%>
+	<% include templates/flash.ejs %>
+
+	<h3 class="page-header">Settings</h3>
+
+	<h5 class="text-center" style="padding-top: 40px;">Change Password</h5>
+	<form method="post" action="/users/settings/changepass">
+        <div class="form-group text-center">
+            <label>UW Email</label>
+            <input type="email" class="form-control" placeholder="Email" name="email">
+        </div>
+        <div class="form-group text-center">
+            <label>Old Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <div class="form-group text-center">
+            <label>New Password</label>
+            <input type="password" class="form-control" placeholder="New password" name="newpass">
+        </div>
+        <div class="form-group text-center">
+            <label>Confirm New Password</label>
+            <input type="password" class="form-control" placeholder="Confirm password" name="newpass2">
+        </div>
+        <!-- TODO: Add email confirmation in future -->
+        <div class="form-group text-center button">
+            <button type="submit" class="btn btn-primary">Change Password</button>
+        </div>
+    </form>
+	<% include templates/footer.ejs%>
+</body>
+</html>

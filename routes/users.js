@@ -241,6 +241,61 @@ router.get('/profile/:userid', function(req, res, next){
    })
 });
 
+// GET User settings
+router.get('/settings', ensureAuthenticated, function(req, res, next) {
+    res.render('settings', {
+        title: 'UW Textbooks'
+    })
+});
+
+// POST user password change
+router.post('/settings/changepass', ensureAuthenticated, function(req, res, next) {
+    var email = req.body.email;
+    var password = req.body.password;
+    var newpass = req.body.newpass;
+    var newpass2 = req.body.newpass2;
+
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('email', 'Email must be in the format example@uwaterloo.ca').matches(/\b(?:@uwaterloo.ca|@edu.uwaterloo.ca)\b/);
+    req.checkBody('password', 'Old password is required').notEmpty();
+    req.checkBody('newpass', 'New password is required').notEmpty();
+    req.checkBody('newpass2', 'New passwords do not match').equals(req.body.newpass);
+
+    var errors = req.validationErrors();
+
+    User.getUserByUsername(req.user.username, function(err, user){
+        if (errors){
+            res.render('settings', {
+                title: 'UW Textbooks',
+                errors: errors
+            })
+        } 
+        else if (user.length == 0) {
+            req.flash('error_msg', 'Email incorrect. Please try again.');
+            res.redirect('/users/settings')
+        }
+        else {
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    User.changePassword(user.username, newpass, function(err, user){
+                        if(err) throw err;
+                        console.log(user);
+                    });
+
+                    req.flash('success_msg', 'You successfully changed your password. Please login again.');
+
+                    req.logout();
+                    res.redirect('/users/login');
+                } else {
+                    req.flash('error_msg', 'Password incorrect. Please try again.');
+                    res.redirect('/users/settings')
+                }
+            });
+            
+        }
+    })
+});
 
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
