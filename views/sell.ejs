@@ -4,99 +4,96 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
 </head>
 
 <body>
-<% include templates/navigation.ejs%>
-<% if (errors.length > 0){ %>
-<% errors.forEach(function(item){ %>
-<div class="alert alert-danger"><%=item.msg%></div>
-<%})%>
-<%}%>
-<% include templates/flash.ejs %>
-
-<h3 class="page-header">Search Existing Textbooks</h3>
-<form method="get" action="/sell">
-    <div class="form-group text-center">
-        <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
-    </div>
-    <div class="form-group text-center button">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-
-
-
-<div class="card text-center">
-    <div class="card-body">
-        <p class="card-text">Don't see the book you want to sell?</p>
-        <a href="/submit/setbook" class="btn btn-info">Submit a Textbook Request</a>
-    </div>
-</div>
-
-<h3 class="page-header">Book Listing</h3>
-<table class="table table-striped text-center">
-    <thead class="thead-dark">
-    <tr>
-        <% if (keyword == null){%>
-        <th>
-            <a href="<%='sell?sort=title'%>" class="td">Title</a>
-        </th>
-        <th>
-            <a href="<%='sell?sort=course'%>" class="td">Course</a>
-        </th>
-        <th>
-            <a href="<%='sell?sort=author'%>" class="td">Author</a>
-        </th>
-        <th>
-            <a href="<%='sell?sort=price'%>" class="td">Lowest Price</a>
-        </th>
-        <th>Action</th>
-        <%} else {%>
-        <th>
-            <a href="<%='sell?search='+keyword+'&sort=title'%>" class="td">Title</a>
-        </th>
-        <th>
-            <a href="<%='sell?search='+keyword+'&sort=course'%>" class="td">Course</a>
-        </th>
-        <th>
-            <a href="<%='sell?search='+keyword+'&sort=author'%>" class="td">Author</a>
-        </th>
-        <th>
-            <a href="<%='sell?search='+keyword+'&sort=price'%>" class="td">Lowest Price</a>
-        </th>
-        <th>Action</th>
-        <%}%>
-    </tr>
-    </thead>
-    <tbody>
-    <% if (setbooks.length > 0){ %>
-    <% setbooks.forEach(function(book){ %>
-    <tr>
-        <td>
-            <a href="<%='/setbook/'+book._id%>"><%=book.title%></a>
-        </td>
-        <td>
-            <%=book.course%>
-        </td>
-        <td>
-            <%=book.author%>
-        </td>
-        <td>
-            <% if (book.min_price === -1){%>
-                N/A
-            <%}else{%>
-                $<%=book.min_price.toFixed(2)%>
-            <%}%>
-        </td>
-        <td>
-            <a href="<%='/submit/book/' +book._id%>">sell</a>
-        </td>
-    </tr>
-    <%})%>
+    <% include templates/navigation.ejs%>
+    <% if (errors.length > 0){ %>
+        <% errors.forEach(function(item){ %>
+            <div class="alert alert-danger"><%=item.msg%></div>
+        <%})%>
     <%}%>
-    </tbody>
-</table>
-</form>
+    <% include templates/flash.ejs %>
+
+    <h3 class="page-header">Search Existing Textbooks</h3>
+    <form method="get" action="/sell">
+        <div class="form-group text-center">
+            <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
+        </div>
+        <div class="form-group text-center button">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <div class="card text-center">
+            <div class="card-body">
+                <p class="card-text">Don't see the book you want to sell?</p>
+                <a href="/submit/setbook" class="btn btn-info">Submit a Textbook Request</a>
+            </div>
+        </div>
+        <h3 class="page-header">Book Listing</h3>
+        <table class="table table-striped text-center">
+            <thead class="thead-dark">
+            <tr>
+                <% if (keyword == null){%>
+                <th>
+                    <a href="<%='sell?sort=title'%>" class="td">Title</a>
+                </th>
+                <th>
+                    <a href="<%='sell?sort=course'%>" class="td">Course</a>
+                </th>
+                <th>
+                    <a href="<%='sell?sort=author'%>" class="td">Author</a>
+                </th>
+                <th>
+                    <a href="<%='sell?sort=price'%>" class="td">Lowest Price</a>
+                </th>
+                <th>Action</th>
+                <%} else {%>
+                <th>
+                    <a href="<%='sell?search='+keyword+'&sort=title'%>" class="td">Title</a>
+                </th>
+                <th>
+                    <a href="<%='sell?search='+keyword+'&sort=course'%>" class="td">Course</a>
+                </th>
+                <th>
+                    <a href="<%='sell?search='+keyword+'&sort=author'%>" class="td">Author</a>
+                </th>
+                <th>
+                    <a href="<%='sell?search='+keyword+'&sort=price'%>" class="td">Lowest Price</a>
+                </th>
+                <th>Action</th>
+                <%}%>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (setbooks.length > 0){ %>
+            <% setbooks.forEach(function(book){ %>
+            <tr>
+                <td>
+                    <a href="<%='/setbook/'+book._id%>"><%=book.title%></a>
+                </td>
+                <td>
+                    <%=book.course%>
+                </td>
+                <td>
+                    <%=book.author%>
+                </td>
+                <td>
+                    <% if (book.min_price === -1){%>
+                        N/A
+                    <%}else{%>
+                        $<%=book.min_price.toFixed(2)%>
+                    <%}%>
+                </td>
+                <td>
+                    <a href="<%='/submit/book/' +book._id%>">sell</a>
+                </td>
+            </tr>
+            <%})%>
+            <%}%>
+            </tbody>
+        </table>
+    </form>
+    <% include templates/footer.ejs%>
 </body>
-<% include templates/footer.ejs%>
 </html>

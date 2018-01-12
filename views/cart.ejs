@@ -4,57 +4,58 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
 </head>
 
 <body>
-<% include templates/navigation.ejs%>
-<% include templates/flash.ejs %>
+    <% include templates/navigation.ejs%>
+    <% include templates/flash.ejs %>
 
-<h3 class="page-header">My Shopping Cart</h3>
-<table class="table table-striped text-center">
-    <thead class="thead-dark">
-    <tr>
-        <th>Title</th>
-        <th>Course</th>
-        <th>Price</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% if (books.length > 0){ %>
-    <% books.forEach(function(book){ %>
-    <tr>
-        <td>
-            <a href='<%='/setbook/'+book.setbookID._id%>'><%=book.setbookID.title%></a>
-        </td>
-        <td>
-            <%=book.setbookID.course%>
-        </td>
-        <td>
-            $<%=book.price.toFixed(2)%>
-        </td>
-        <td>
-            <% if (book.sold){%>
-                Sold
-            <%}else{%>
-                Available
-            <%}%>
-        </td>
-        <td>
-            <a href="<%='/book/'+book._id%>">view</a>
-        </td>
-    </tr>
-    <%})%>
-    <%}%>
-    </tbody>
-</table>
+    <h3 class="page-header">My Shopping Cart</h3>
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (books.length > 0){ %>
+        <% books.forEach(function(book){ %>
+        <tr>
+            <td>
+                <a href='<%='/setbook/'+book.setbookID._id%>'><%=book.setbookID.title%></a>
+            </td>
+            <td>
+                <%=book.setbookID.course%>
+            </td>
+            <td>
+                $<%=book.price.toFixed(2)%>
+            </td>
+            <td>
+                <% if (book.sold){%>
+                    Sold
+                <%}else{%>
+                    Available
+                <%}%>
+            </td>
+            <td>
+                <a href="<%='/book/'+book._id%>">view</a>
+            </td>
+        </tr>
+        <%})%>
+        <%}%>
+        </tbody>
+    </table>
 
-<form action="/users/cart" method="post">
-    <div class="form-group text-center button">
-        <button type="submit" class="btn btn-primary">Purchase</button>
-    </div>
-</form>
+    <form action="/users/cart" method="post">
+        <div class="form-group text-center button">
+            <button type="submit" class="btn btn-primary">Purchase</button>
+        </div>
+    </form>
+    <% include templates/footer.ejs%>
 </body>
-<% include templates/footer.ejs%>
 </html>
