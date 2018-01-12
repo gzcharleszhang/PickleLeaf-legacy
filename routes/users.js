@@ -33,6 +33,7 @@ router.post('/register', function(req, res, next) {
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
     var errors = req.validationErrors();
+
     User.find({username: username}, function(err, username_exist){
         User.find({email: email}, function (err, email_exist){
             if(errors) {
@@ -40,15 +41,18 @@ router.post('/register', function(req, res, next) {
                     title: 'UW Textbooks',
                     errors: errors
                 });
-            } else if (username_exist.length > 0) {
-                console.log(username_exist);
-                req.flash('error_msg', 'Username already exists');
-
-                res.redirect('/users/register');
-            } else if (email_exist.length > 0){
-                req.flash('error_msg', 'Email already exists');
+            }else if ((email_exist.length > 0) && (username_exist.length > 0)){
+                req.flash('error_msg', 'Username and email already exists');
                 res.redirect('/users/register')
-            } else {
+            }else if (email_exist.length > 0){
+                req.flash('error_msg', 'Email already exists')
+                res.redirect('/users/register')
+
+            }else if (username_exist.length > 0){
+                req.flash('error_msg', 'Username already exists')
+                res.redirect('/users/register')
+
+            }else {
                 var newUser = new User({
                     name: name,
                     email: email,
