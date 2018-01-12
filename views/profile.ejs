@@ -7,91 +7,91 @@
 </head>
 
 <body>
-<% include templates/navigation.ejs%>
-<% include templates/flash.ejs %>
-<div class="row">
-    <div class="col-md-4 offset-md-2">
-        <div class="card text-center">
-            <div class="card-body">
-                <img src='<%=avatarURL%>' alt="User Avatar" style="width:200px;height:200px;">
+    <% include templates/navigation.ejs%>
+    <% include templates/flash.ejs %>
+    <div class="row">
+        <div class="col-md-4 offset-md-2">
+            <div class="card text-center">
+                <div class="card-body">
+                    <img src='<%=avatarURL%>' alt="User Avatar" style="width:200px;height:200px;">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                    <h3 class="card-title">User: <%=username%></h3>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-                <h3 class="card-title">User: <%=username%></h3>
-        </div>
-    </div>
-</div>
-<table class="table table-striped text-center">
-    <thead class="thead-dark">
-    <tr>
-        <th>Title</th>
-        <th>Course</th>
-        <th>Price</th>
-        <th>Availability</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% if (books.length > 0){ %>
-    <% books.forEach(function(book){ %>
-    <tr>
-        <td>
-            <%=book.setbookID.title%>
-        </td>
-        <td>
-            <%=book.setbookID.course%>
-        </td>
-        <td>
-            $<%=book.price.toFixed(2)%>
-        </td>
-        <td>
-            <% if (book.sold){%>
-            Sold
-            <%}else{%>
-            Available
-            <%}%>
-        </td>
-        <td>
-            <a href='<%='/book/'+book._id%>'>view</a>
-        </td>
-    </tr>
-    <%})%>
-    <%}%>
-    </tbody>
-</table>
-<h3 class="page-header">User Ratings</h3>
-<table class="table table-striped text-center">
-    <thead class="thead-dark">
-    <tr>
-        <th>Users</th>
-        <th>Ratings</th>
-        <th>Comments</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% if (ratings.length > 0){ %>
-    <% ratings.forEach(function(rating){ %>
-    <tr>
-        <td>
-            <%=rating.sender.username%>
-        </td>
-        <td>
-            <%=rating.score%>
-        </td>
-        <td>
-            <%=rating.comment%>
-        </td>
-        <td>
-            <%=rating.date.toLocaleDateString("en-US")%>
-        </td>
-    </tr>
-    <%})%>
-    <%}%>
-    </tbody>
-</table>
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Price</th>
+            <th>Availability</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (books.length > 0){ %>
+        <% books.forEach(function(book){ %>
+        <tr>
+            <td>
+                <%=book.setbookID.title%>
+            </td>
+            <td>
+                <%=book.setbookID.course%>
+            </td>
+            <td>
+                $<%=book.price.toFixed(2)%>
+            </td>
+            <td>
+                <% if (book.sold){%>
+                Sold
+                <%}else{%>
+                Available
+                <%}%>
+            </td>
+            <td>
+                <a href='<%='/book/'+book._id%>'>view</a>
+            </td>
+        </tr>
+        <%})%>
+        <%}%>
+        </tbody>
+    </table>
+    <h3 class="page-header">User Ratings</h3>
+    <table class="table table-striped text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Users</th>
+            <th>Ratings</th>
+            <th>Comments</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if (ratings.length > 0){ %>
+        <% ratings.forEach(function(rating){ %>
+        <tr>
+            <td>
+                <%=rating.sender.username%>
+            </td>
+            <td>
+                <%=rating.score%>
+            </td>
+            <td>
+                <%=rating.comment%>
+            </td>
+            <td>
+                <%=rating.date.toLocaleDateString("en-US")%>
+            </td>
+        </tr>
+        <%})%>
+        <%}%>
+        </tbody>
+    </table>
+    <% include templates/footer.ejs%>
 </body>
-<% include templates/footer.ejs%>
 </html>
