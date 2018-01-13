@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Book = require('../models/book');
 var Setbook = require('../models/setbook');
+var User = require('../models/user');
 
 
 /* GET home page. */
@@ -86,7 +87,7 @@ router.get('/setbook/:setbookid', function(req, res, next){
   var setbookid = req.params.setbookid;
   var setbook = new Setbook();
 
-  Setbook.findById(setbookid).populate('books').exec(function (err, setbook) {
+  Setbook.findById(setbookid).populate({path: 'books', populate: {path: 'sellerId'}}).exec(function (err, setbook) {
     if (err){
         res.render('error', {
             message: 'Book not Found',
@@ -95,6 +96,7 @@ router.get('/setbook/:setbookid', function(req, res, next){
         })
     }else{
         console.log(setbook);
+        console.log(setbook.books.sellerId);
         var book = new Book();
 
         res.render('setbook', {
@@ -118,7 +120,7 @@ router.get('/book/:bookid', function(req, res, next){
   var book = new Book();
   var avail;
 
-  Book.findById(bookid).populate('setbookID').exec(function (err, book) {
+  Book.findById(bookid).populate('setbookID').populate('sellId').exec(function (err, book) {
 
     if (err){
         res.render('error', {
@@ -141,7 +143,7 @@ router.get('/book/:bookid', function(req, res, next){
             course: book.setbookID.course,
             price: book.price,
             description: book.description,
-            seller: book.username,
+            sellerId: book.sellerId,
             avail: avail,
             sold: book.sold,
             imageURL: book.setbookID.imageURL,

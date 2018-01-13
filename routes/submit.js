@@ -153,7 +153,7 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
     var price = req.body.price;
     var description = req.body.description;
     var setbookID = req.params.setbookid;
-    var username = req.user.username;
+    var sellerId = req.user._id;
 
     // Validation
     req.checkBody('price', 'Price is required').notEmpty();
@@ -173,7 +173,7 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
             var newBook = new Book ({
                 price: price,
                 description: description,
-                username: username,
+                sellerId: sellerId,
                 setbookID: setbookID,
                 sold: false
             });

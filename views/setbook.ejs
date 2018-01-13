@@ -50,7 +50,7 @@
         <% books.forEach(function(book){ %>
         <tr>
             <td>
-                <%=book.username%>
+                <a href="<%='/users/profile/'+book.sellerId._id%>"><%=book.sellerId.username%></a>
             </td>
             <td>
                 $<%=book.price.toFixed(2)%>

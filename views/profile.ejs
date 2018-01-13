@@ -80,7 +80,7 @@
         <% ratings.forEach(function(rating){ %>
         <tr>
             <td>
-                <%=rating.sender.username%>
+                <a href="<%='/users/profile/'+rating.sender._id%>"><%=rating.sender.username%>
             </td>
             <td>
                 <%=rating.score%>

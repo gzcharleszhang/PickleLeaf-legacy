@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 // Book Schema
 var BookSchema = mongoose.Schema({
-    sellerID: {
+    sellerId: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },
