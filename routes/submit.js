@@ -6,6 +6,7 @@ var Setbook = require('../models/setbook');
 var Soldbook = require('../models/soldbook');
 var User = require('../models/user');
 var mongoose = require('mongoose');
+var Rating = require('../models/rating');
 
 // GET setbook submission page
 router.get('/setbook', ensureAuthenticated, function(req, res, next){
@@ -211,10 +212,40 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
 });
 
 // GET submit user rating page
-router.post('/rating', ensureAuthenticated, function(req, res, next){
+router.get('/rating/:receiverId', ensureAuthenticated, function(req, res, next){
     res.render('submit_rating', {
-        title: 'UW Textbooks'
+        title: 'UW Textbooks',
+        errors: [],
+        receiverId: req.params.receiverId
     })
+});
+
+// POST submit user rating
+router.post('/rating/:receiverId', ensureAuthenticated, function(req, res, next){
+    //Validation
+    req.checkBody('score', 'You need to submit a score').notEmpty();
+    var errors = req.validationErrors();
+    var receiverId = req.params.receiverId;
+    var rating = {
+        comment: req.body.comment,
+        score: req.body.score,
+        receiver: receiverId,
+        sender: req.user._id
+    };
+    if (errors){
+        res.render('submit_rating', {
+            title: 'UW Textbooks',
+            errors: errors,
+            receiverId: req.params.receiverId
+        })
+    } else{
+        Rating.createRating(rating, function(err, newRating){
+            if (err) throw err;
+            console.log(newRating);
+            res.redirect('/users/profile/' + receiverId)
+        })
+    }
+
 });
 
 function ensureAuthenticated(req, res, next){

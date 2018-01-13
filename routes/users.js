@@ -237,7 +237,8 @@ router.get('/profile/:userid', function(req, res, next){
                        username: user.username,
                        books: books,
                        ratings: ratings,
-                       avatarURL: 'https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png'
+                       avatarURL: 'https://conferencecloud-assets.s3.amazonaws.com/default_avatar.png',
+                       userId: userId
                    })
                })
            })
