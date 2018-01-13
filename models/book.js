@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 var Setbook = require('./setbook');
+var User = require('./user');
 var Schema = mongoose.Schema;
 
 
 // Book Schema
 var BookSchema = mongoose.Schema({
-    username: {
-        type: String,
-        index:true
+    sellerID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     price: {
         type: Number
