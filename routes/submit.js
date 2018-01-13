@@ -226,12 +226,12 @@ router.post('/rating/:receiverId', ensureAuthenticated, function(req, res, next)
     req.checkBody('score', 'You need to submit a score').notEmpty();
     var errors = req.validationErrors();
     var receiverId = req.params.receiverId;
-    var rating = {
+    var rating = new Rating({
         comment: req.body.comment,
         score: req.body.score,
         receiver: receiverId,
         sender: req.user._id
-    };
+    });
     if (errors){
         res.render('submit_rating', {
             title: 'UW Textbooks',
@@ -240,10 +240,13 @@ router.post('/rating/:receiverId', ensureAuthenticated, function(req, res, next)
         })
     } else{
         Rating.createRating(rating, function(err, newRating){
-            if (err) throw err;
+            if (err){
+                console.log(err);
+                throw err;
+            }
             console.log(newRating);
-            res.redirect('/users/profile/' + receiverId)
-        })
+        });
+        res.redirect('/users/profile/' + receiverId)
     }
 
 });

@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var User = require('./user');
 var Schema = mongoose.Schema;
 
-
 // Rating Schema
 var RatingSchema = mongoose.Schema({
     comment: {
@@ -27,7 +26,7 @@ var RatingSchema = mongoose.Schema({
 
 var Rating = module.exports = mongoose.model('Rating', RatingSchema);
 
-// CreateBook function saves a textbook into db
+// CreateBook function saves a rating into db
 module.exports.createRating = function(newRating, callback){
     newRating.save(callback);
 };
