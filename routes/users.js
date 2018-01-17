@@ -136,7 +136,7 @@ router.get('/logout', ensureAuthenticated, function(req, res){
 
 // GET dashboard page
 router.get('/dashboard', ensureAuthenticated, function(req, res, next){
-    Book.find({username: req.user.username}).populate('setbookID').exec(function (err, booksown) {
+    Book.find({sellerId: req.user._id}).populate('setbookID').exec(function (err, booksown) {
         Soldbook.find({buyer: req.user._id}).populate({
             path: 'bookID',
             populate: {path: 'setbookID'}
