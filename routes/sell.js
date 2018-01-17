@@ -13,7 +13,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
         if (sort == null){
             Setbook.find({}, function(error, setbooks){
                 res.render('sell', {
-                    title: 'UW Textbooks',
+                    title: 'PickleLeaf',
                     errors: false,
                     setbooks: setbooks,
                     keyword: null
@@ -22,7 +22,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
         } else {
             Setbook.find().sort(sort).exec(function(error, setbooks){
                 res.render('sell', {
-                    title: 'UW Textbooks',
+                    title: 'PickleLeaf',
                     errors: false,
                     setbooks: setbooks,
                     keyword: null
@@ -40,7 +40,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
                 if (setbooks == null) {
                     Setbook.find({}, function (error, setbooks) {
                         res.render('sell', {
-                            title: 'UW Textbooks',
+                            title: 'PickleLeaf',
                             errors: false,
                             setbooks: setbooks,
                             keyword: null
@@ -49,7 +49,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
                 }else{
 
                     res.render('sell', {
-                        title: 'UW Textbooks',
+                        title: 'PickleLeaf',
                         errors: false,
                         setbooks: setbooks,
                         keyword: key
@@ -63,7 +63,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
                 if (setbooks == null) {
                     Setbook.find({}, function (error, setbooks) {
                         res.render('sell', {
-                            title: 'UW Textbooks',
+                            title: 'PickleLeaf',
                             errors: false,
                             setbooks: setbooks,
                             keyword: null
@@ -72,7 +72,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
                 }else{
 
                     res.render('sell', {
-                        title: 'UW Textbooks',
+                        title: 'PickleLeaf',
                         errors: false,
                         setbooks: setbooks,
                         keyword: key

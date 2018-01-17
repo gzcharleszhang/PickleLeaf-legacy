@@ -157,7 +157,7 @@ router.get('/dashboard', ensureAuthenticated, function(req, res, next){
 router.get('/cart', ensureAuthenticated, function(req, res, next){
    User.findById(req.user._id).populate({path: 'cart', populate: {path: 'setbookID'}}).exec(function (err, user){
        res.render('cart', {
-           title: 'UW Textbooks',
+           title: 'PickleLeaf',
            books: user.cart
        })
    })
@@ -226,14 +226,14 @@ router.get('/profile/:userid', function(req, res, next){
        console.log(user);
        if (err || user == null){
            res.render('error', {
-               title: 'UW Textbooks',
+               title: 'PickleLeaf',
                message: 'User does not exist'
            })
        } else {
            Book.find({username: user.username}).populate('setbookID').exec(function(err, books){
                Rating.find({receiver: userId}).populate('sender').exec(function(err, ratings){
                    res.render('profile', {
-                       title: 'UW Textbooks',
+                       title: 'PickleLeaf',
                        username: user.username,
                        books: books,
                        ratings: ratings,
@@ -249,7 +249,7 @@ router.get('/profile/:userid', function(req, res, next){
 // GET User settings
 router.get('/settings', ensureAuthenticated, function(req, res, next) {
     res.render('settings', {
-        title: 'UW Textbooks',
+        title: 'PickleLeaf',
         errors: false
     })
 });
@@ -272,7 +272,7 @@ router.post('/settings/changepass', ensureAuthenticated, function(req, res, next
     User.getUserByUsername(req.user.username, function(err, user){
         if (errors){
             res.render('settings', {
-                title: 'UW Textbooks',
+                title: 'PickleLeaf',
                 errors: errors
             })
         }

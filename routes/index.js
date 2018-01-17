@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
         if (sort == null){
             Setbook.find({}, function(error, setbooks){
                 res.render('index', {
-                    title: 'UW Textbooks',
+                    title: 'PickleLeaf',
                     books: setbooks,
                     keyword: null
                 })
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
         } else {
             Setbook.find().sort(sort).exec(function(error, setbooks){
                 res.render('index', {
-                    title: 'UW Textbooks',
+                    title: 'PickleLeaf',
                     books: setbooks,
                     keyword: null
                 })
@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
                 if (setbooks == null) {
                     Setbook.find({}, function (error, setbooks) {
                         res.render('index', {
-                            title: 'UW Textbooks',
+                            title: 'PickleLeaf',
                             books: setbooks,
                             keyword: null
                         })
@@ -46,7 +46,7 @@ router.get('/', function(req, res, next) {
                 }else{
 
                     res.render('index', {
-                        title: 'UW Textbooks',
+                        title: 'PickleLeaf',
                         books: setbooks,
                         keyword: key
                     })
@@ -59,7 +59,7 @@ router.get('/', function(req, res, next) {
                 if (setbooks == null) {
                     Setbook.find({}, function (error, setbooks) {
                         res.render('index', {
-                            title: 'UW Textbooks',
+                            title: 'PickleLeaf',
                             errors: false,
                             books: setbooks,
                             keyword: null
@@ -68,7 +68,7 @@ router.get('/', function(req, res, next) {
                 }else{
 
                     res.render('index', {
-                        title: 'UW Textbooks',
+                        title: 'PickleLeaf',
                         errors: false,
                         books: setbooks,
                         keyword: key
@@ -92,7 +92,7 @@ router.get('/setbook/:setbookid', function(req, res, next){
         res.render('error', {
             message: 'Book not Found',
             error: err,
-            title: 'UW Textbooks'
+            title: 'PickleLeaf'
         })
     }else{
         console.log(setbook);
@@ -100,7 +100,7 @@ router.get('/setbook/:setbookid', function(req, res, next){
         var book = new Book();
 
         res.render('setbook', {
-            title: 'UW Textbooks',
+            title: 'PickleLeaf',
             booktitle: setbook.title,
             author: setbook.author,
             course: setbook.course,
@@ -125,7 +125,7 @@ router.get('/book/:bookid', function(req, res, next){
         res.render('error', {
             message: 'Book not Found',
             error: err,
-            title: 'UW Textbooks'
+            title: 'PickleLeaf'
         })
     }else{
 
@@ -135,7 +135,7 @@ router.get('/book/:bookid', function(req, res, next){
             avail = 'Available';
         }
         res.render('book', {
-            title: 'UW Textbooks',
+            title: 'PickleLeaf',
             book_id: bookid,
             book_title: book.setbookID.title,
             author: book.setbookID.author,

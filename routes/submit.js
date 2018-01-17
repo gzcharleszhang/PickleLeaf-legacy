@@ -11,7 +11,7 @@ var Rating = require('../models/rating');
 // GET setbook submission page
 router.get('/setbook', ensureAuthenticated, function(req, res, next){
    res.render('submit_setbook', {
-       title: 'UW Textbooks',
+       title: 'PickleLeaf',
        errors: false
    })
 });
@@ -34,7 +34,7 @@ router.post('/setbook', ensureAuthenticated, function(req, res, next){
 
     if (errors) {
         res.render('submit_setbook', {
-            title: 'UW Textbooks',
+            title: 'PickleLeaf',
             errors: errors
         });
     } else {
@@ -68,7 +68,7 @@ router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
             res.render('error', {
                 message: 'Book not Found',
                 error: err,
-                title: 'UW Textbooks'
+                title: 'PickleLeaf'
             })
         }else{
             if (book.sold){
@@ -77,7 +77,7 @@ router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
                 avail = 'Available';
             }
             res.render('purchase', {
-                title: 'UW Textbooks',
+                title: 'PickleLeaf',
                 errors: false,
                 book_id: bookid,
                 booktitle: book.setbookID.title,
@@ -135,11 +135,11 @@ router.get('/book/:setbookid', ensureAuthenticated, function(req, res, next){
             res.render('error', {
                 message: 'Book not found',
                 error: err,
-                title: 'UW Textbooks'
+                title: 'PickleLeaf'
             })
         }else{
             res.render('submit', {
-                title: 'UW Textbooks',
+                title: 'PickleLeaf',
                 errors: false,
                 setbookID: setbookID,
                 booktitle: setbook.title
@@ -164,7 +164,7 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
     Setbook.findById(setbookID, function(err, setbook){
         if (errors) {
             res.render('submit', {
-                title: 'UW Textbooks',
+                title: 'PickleLeaf',
                 booktitle: setbook.title,
                 setbookID: setbookID,
                 errors: errors
@@ -214,7 +214,7 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
 // GET submit user rating page
 router.get('/rating/:receiverId', ensureAuthenticated, function(req, res, next){
     res.render('submit_rating', {
-        title: 'UW Textbooks',
+        title: 'PickleLeaf',
         errors: [],
         receiverId: req.params.receiverId
     })
@@ -234,7 +234,7 @@ router.post('/rating/:receiverId', ensureAuthenticated, function(req, res, next)
     });
     if (errors){
         res.render('submit_rating', {
-            title: 'UW Textbooks',
+            title: 'PickleLeaf',
             errors: errors,
             receiverId: req.params.receiverId
         })
