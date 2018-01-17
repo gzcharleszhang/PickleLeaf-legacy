@@ -120,7 +120,7 @@ router.get('/book/:bookid', function(req, res, next){
   var book = new Book();
   var avail;
 
-  Book.findById(bookid).populate('setbookID').populate('sellId').exec(function (err, book) {
+  Book.findById(bookid).populate('setbookID').populate('sellerId').exec(function (err, book) {
     if (err){
         res.render('error', {
             message: 'Book not Found',
