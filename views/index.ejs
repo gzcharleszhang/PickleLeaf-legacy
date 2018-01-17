@@ -10,7 +10,7 @@
 <body>
   	<% include templates/navigation.ejs%>
   	<% include templates/flash.ejs %>
-	<h3 class="page-header">Welcome to <%= title %></h3>
+	<h3 class="page-header"><%= title %> - A Textbook Trading Platform for UW Students</h3>
     <form method="get" action="/">
         <div class="form-group text-center">
             <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
