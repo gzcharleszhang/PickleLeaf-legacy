@@ -4,7 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test', {
+mongoose.connect("mongodb://uwtextbooks:caliorbust2018@ds039155.mlab.com:39155/uwtextbooks", {
   useMongoClient: true
 });
 var db = mongoose.connection;
