@@ -15,7 +15,7 @@ router.get('/', ensureAuthenticated, function(req, res, next){
             if (err) throw err;
 
             res.render('messages', {
-                title: 'Pickle Leaf',
+                title: 'PickleLeaf',
                 messages_received: messages_received,
                 messages_sent: messages_sent
             })
@@ -29,7 +29,7 @@ router.get('/submit', ensureAuthenticated, function(req, res, next){
     var recipient_id = req.query.recipient;
     if (recipient_id == null){
         res.render('submit_message', {
-            title: 'Pickle Leaf',
+            title: 'PickleLeaf',
             errors: [],
             recipient_name: ""
         })
@@ -37,7 +37,7 @@ router.get('/submit', ensureAuthenticated, function(req, res, next){
         User.findById(recipient_id).exec(function(err, user){
             if (err) {
                 res.render('error',{
-                    title: 'Pickle Leaf',
+                    title: 'PickleLeaf',
                     message: 'User does not exist'
                 })
             } else {
@@ -71,7 +71,7 @@ router.post('/submit', function(req, res){
 
     if (errors) {
         res.render('submit_message', {
-            title: 'Pickle Leaf',
+            title: 'PickleLeaf',
             errors: errors,
             recipient_name: ""
         })
@@ -79,7 +79,7 @@ router.post('/submit', function(req, res){
         User.find({username: receiver_name}, function(err, users){
             if (users == null){
                 res.render("error", {
-                    title: 'Pickle Leaf',
+                    title: 'PickleLeaf',
                     message: 'User does not exist'
                 })
             } else {

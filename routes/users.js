@@ -143,7 +143,7 @@ router.get('/dashboard', ensureAuthenticated, function(req, res, next){
         }).exec(function (err, bookspurchased){
             console.log(bookspurchased);
             res.render('dashboard', {
-                title: 'UW Textbooks',
+                title: 'PickleLeaf',
                 books: booksown,
                 bookspurchased: bookspurchased,
                 username: req.user.username
