@@ -9,9 +9,9 @@ var Message = require('../models/message');
 router.get('/', ensureAuthenticated, function(req, res, next){
     var userId = req.user._id;
 
-    Message.find({receiver: userId}).populate('sender').exec(function (err, messages_received){
+    Message.find({receiver: userId}).sort('-date').populate('sender').exec(function (err, messages_received){
         if (err) throw err;
-        Message.find({sender: userId}).populate('receiver').exec(function (err, messages_sent){
+        Message.find({sender: userId}).sort('-date').populate('receiver').exec(function (err, messages_sent){
             if (err) throw err;
 
             res.render('messages', {
