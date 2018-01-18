@@ -77,7 +77,7 @@ router.post('/submit', function(req, res){
         })
     } else {
         User.find({username: receiver_name}, function(err, users){
-            if (users == null){
+            if (users.length === 0){
                 res.render("error", {
                     title: 'PickleLeaf',
                     message: 'User does not exist'
