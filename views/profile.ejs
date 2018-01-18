@@ -30,6 +30,7 @@
             </div>
         </div>
     </div>
+    <% if (books.length > 0){ %>
     <table class="table table-striped text-center">
         <thead class="thead-dark">
         <tr>
@@ -41,7 +42,7 @@
         </tr>
         </thead>
         <tbody>
-        <% if (books.length > 0){ %>
+
         <% books.forEach(function(book){ %>
         <tr>
             <td>
@@ -65,9 +66,9 @@
             </td>
         </tr>
         <%})%>
-        <%}%>
         </tbody>
     </table>
+    <%}%>
     <h3 class="page-header">User Ratings</h3>
     <table class="table table-striped text-center">
         <thead class="thead-dark">

@@ -230,7 +230,7 @@ router.get('/profile/:userid', function(req, res, next){
                message: 'User does not exist'
            })
        } else {
-           Book.find({username: user.username}).populate('setbookID').exec(function(err, books){
+           Book.find({sellerId: user._id}).populate('setbookID').exec(function(err, books){
                Rating.find({receiver: userId}).populate('sender').exec(function(err, ratings){
                    res.render('profile', {
                        title: 'PickleLeaf',
