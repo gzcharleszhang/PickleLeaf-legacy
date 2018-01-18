@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+</head>
+
+<body>
+<% include templates/navigation.ejs%>
+<% include templates/flash.ejs %>
+
+<h3 class="page-header">Messages Received</h3>
+<table class="table table-striped text-center">
+    <thead class="thead-dark">
+    <tr>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Sender</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (messages_received.length > 0){ %>
+    <% messages_received.forEach(function(msg){ %>
+    <tr>
+        <td>
+            <%=msg.date.toLocaleTimeString("en-US")%> <br>
+            <%=msg.date.toLocaleDateString("en-US")%>
+        </td>
+        <td>
+            <%=msg.title%>
+        </td>
+        <td>
+            <a href="<%='/users/profile/'+msg.sender._id%>">
+                <%=msg.sender.username%>
+            </a>
+        </td>
+        <td>
+            <a href="<%='/messages/'+msg._id%>">view</a>
+        </td>
+    </tr>
+    <%})%>
+    <%}%>
+    </tbody>
+</table>
+<h3 class="page-header">Messages Sent</h3>
+<table class="table table-striped text-center">
+    <thead class="thead-dark">
+    <tr>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Receiver</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (messages_sent.length > 0){ %>
+    <% messages_sent.forEach(function(msg){ %>
+    <tr>
+        <td>
+            <%=msg.date.toLocaleTimeString("en-US")%> <br>
+            <%=msg.date.toLocaleDateString("en-US")%>
+        </td>
+        <td>
+            <%=msg.title%>
+        </td>
+        <td>
+            <a href="<%='/users/profile/'+msg.receiver._id%>">
+                <%=msg.receiver.username%>
+            </a>
+        </td>
+        <td>
+            <a href="<%='/messages/'+msg._id%>">view</a>
+        </td>
+    </tr>
+    <%})%>
+    <%}%>
+    </tbody>
+</table>
+<% include templates/footer.ejs%>
+</body>
+</html>

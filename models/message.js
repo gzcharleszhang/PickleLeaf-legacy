@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var MessageSchema = mongoose.Schema({
     title: {
         type: String
-    }
+    },
     content: {
         type: String
     },
