@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var MessageSchema = mongoose.Schema({
     title: {
         type: String
-    }
+    },
     content: {
         type: String
     },
@@ -20,7 +20,8 @@ var MessageSchema = mongoose.Schema({
         ref: "User"
     },
     read: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     date: {
         type: Date,
