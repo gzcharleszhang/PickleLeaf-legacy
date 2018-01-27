@@ -199,7 +199,6 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
                         console.log(updatedUser);
                     })
                 })
-
             });
 
             req.flash('success_msg', 'You have successfully submitted a book.');

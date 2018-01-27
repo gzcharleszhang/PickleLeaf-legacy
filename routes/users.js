@@ -172,14 +172,44 @@ router.post('/cart', ensureAuthenticated, purchaseBooks, function(req, res, next
     res.redirect('/users/dashboard/');
 });
 
+// Makes sure the min_price for each setbook is the lowest available price after a book is sold
+function updateMinPrice(setbookID){
+    var promise = new Promise(function (resolve, reject){
+        Setbook.findById(setbookID).exec(function (err, setbook){
+            if (err) {
+                reject(err);
+            }
+            Book.find({setbookID: setbookID, sold: false}).sort('price').exec(function (err, books){
+                if (books.length > 0){
+                    setbook.min_price = books[0].price;
+                } else {
+                    setbook.min_price = -1;
+                }
+                setbook.save();
+                resolve(setbook.min_price);
+
+            });
+
+        });
+
+    });
+    return promise;
+
+}
+
+/*
+    Empty the user's cart
+    Updates each book's sold property to true
+    Creates a soldbook entry in the soldbooks collection
+    Updates book's minimum price
+ */
 function purchaseBooks(req, res, next){
     var buyer = req.user._id;
     User.findById(req.user._id, function(err, user){
 
         user.cart.forEach(function (bookid){
 
-            Book.findById(bookid).exec(function (err, book) {
-
+            Book.findById(bookid).populate('setbookID').exec(function (err, book) {
 
                 // Changes book to sold status
                 if (!book.sold){
@@ -206,17 +236,25 @@ function purchaseBooks(req, res, next){
                     console.log(updatedUser);
                 });
                 console.log(user);
-
+                console.log('debug');
+                updateMinPrice(book.setbookID)
+                    .then(function (price){
+                        console.log('price: '+price);
+                        user.cart = [];
+                        user.save(function (err, updatedUser){
+                            if (err) throw(err);
+                            //console.log(updatedUser);
+                        });
+                        //console.log(user);
+                        return next();
+                    }).catch(function(err) {
+                        console.log(err);
+                })
             });
         });
-        user.cart = [];
-        user.save(function (err, updatedUser){
-            if (err) throw(err);
-            console.log(updatedUser);
-        });
-        console.log(user);
+
     });
-    return next();
+
 }
 
 // GET User profile
