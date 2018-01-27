@@ -18,14 +18,6 @@ var UserSchema = mongoose.Schema({
     name: {
         type: String
     },
-    booksown: [{
-        type: Schema.Types.ObjectId,
-        ref: "Book"
-    }],
-    bookspurchased: [{
-        type: Schema.Types.ObjectId,
-        ref: "Book"
-    }],
     cart: [{
         type: Schema.Types.ObjectId,
         ref: "Book"

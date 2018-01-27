@@ -229,13 +229,7 @@ function purchaseBooks(req, res, next){
                     if(err) throw err;
                     console.log(soldbook);
                 });
-
-                user.bookspurchased = user.bookspurchased.concat([bookid]);
-                user.save(function (err, updatedUser){
-                    if (err) throw(err);
-                    console.log(updatedUser);
-                });
-                console.log(user);
+                
                 console.log('debug');
                 updateMinPrice(book.setbookID)
                     .then(function (price){

@@ -93,6 +93,21 @@ router.get('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
     });
 });
 
+// Checks if cart contains the given bookId
+function contains(cart, bookId){
+    var promise = new Promise(function (resolve, reject) {
+        for (var i = 0; i < cart.length; i++) {
+            if (id == booId){
+                reject();
+                break;
+            }
+        }
+        resolve();
+    });
+
+    return promise;
+}
+
 /* POST book purchasing page */
 router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
     var bookid = req.params.bookid;
@@ -111,16 +126,26 @@ router.post('/purchase/:bookid', ensureAuthenticated, function(req, res, next) {
             })
         } else {
             User.findById(req.user._id, function(err, user){
-                user.cart = user.cart.concat([bookid]);
-                user.save(function (err, updatedUser){
-                    if (err) throw(err);
-                    console.log(updatedUser);
+
+                contains(user.cart, bookid)
+                    .then(function(){
+
+                            user.cart = user.cart.concat([bookid]);
+                            user.save(function (err, updatedUser){
+                                if (err) throw(err);
+                                console.log(updatedUser);
+                            });
+                            req.flash('success_msg', 'Your book is now in your shopping cart.');
+
+                            res.redirect('/submit/purchase/'+bookid);
+                    }).catch(function() {
+                    req.flash('error_msg', 'This book is already in your shopping cart');
+                    res.redirect('/submit/purchase/'+bookid);
                 })
+
+
             });
 
-            req.flash('success_msg', 'Your book is now in your shopping cart.');
-
-            res.redirect('/submit/purchase/'+bookid);
         }
     });
 
@@ -191,14 +216,6 @@ router.post('/book/:setbookid', ensureAuthenticated, function(req, res, next){
                     console.log(updatedSetbook);
                 });
 
-                User.findById(req.user._id, function(err, user){
-                    console.log(user);
-                    console.log(user.booksown);
-                    user.booksown = user.booksown.concat([book._id]);
-                    user.save(function (err, updatedUser){
-                        console.log(updatedUser);
-                    })
-                })
             });
 
             req.flash('success_msg', 'You have successfully submitted a book.');
