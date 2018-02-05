@@ -5,11 +5,15 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
+<div class="main-body container">
     <h3 class="page-header">Account Login</h3>
     <form method="post" action="/users/login">
         <div class="form-group text-center">
@@ -26,5 +30,6 @@
         </div>
     </form>
     <% include templates/footer.ejs%>
+</div>
 </body>
 </html>

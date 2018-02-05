@@ -5,11 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
+<div class="main-body container">
     <div class="row">
         <div class="col-md-4 offset-md-2">
             <div class="card text-center">
@@ -32,7 +37,7 @@
     </div>
     <% if (books.length > 0){ %>
     <table class="table table-striped text-center">
-        <thead class="thead-dark">
+        <thead class="thead">
         <tr>
             <th>Title</th>
             <th>Course</th>
@@ -71,7 +76,7 @@
     <%}%>
     <h3 class="page-header">User Ratings</h3>
     <table class="table table-striped text-center">
-        <thead class="thead-dark">
+        <thead class="thead">
         <tr>
             <th>Users</th>
             <th>Ratings</th>
@@ -100,6 +105,7 @@
         <%}%>
         </tbody>
     </table>
+</div>
     <% include templates/footer.ejs%>
 </body>
 </html>

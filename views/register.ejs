@@ -8,8 +8,11 @@
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
+<div class="container main-body">
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
@@ -43,6 +46,7 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </form>
+</div>
     <% include templates/footer.ejs%>
 </body>
 </html>

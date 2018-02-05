@@ -5,12 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
-
+<div class="container main-body">
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
@@ -50,7 +54,7 @@
         </div>  
     </div>
 
-    <form method="post" action='<%="/submit/purchase/" + book_id%>'>
+    <form method="post" action='<%="/submit/purchase/" + book_id%>' >
         <div class="form-group text-center">
             <label>Message to Seller (<%=seller%>)</label>
             <textarea class="form-control" name="message" placeholder="Let the seller know you want to purchase and they will get back to you."></textarea>
@@ -60,5 +64,7 @@
         </div>
     </form>
     <% include templates/footer.ejs%>
+
+</div>
 </body>
 </html>

@@ -52,13 +52,18 @@ h3 {
     font-family: 'Pacifico', sans-serif;
 }
 
-.alert{
-    position: relative;
-    top: 70px;
-}
-
 .main-body {
     padding-top: 70px; /*navbar space*/
+}
+
+.card, .list-group-item{
+    background-color: rgba(252,233,199, 0.2);
+    color: white;
+}
+
+label {
+    font-size: 12pt;
+    color: white;
 }
 
 .page-header{
