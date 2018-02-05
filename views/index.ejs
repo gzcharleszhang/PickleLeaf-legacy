@@ -5,86 +5,92 @@
   <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
 </head>
 
 <body>
+    <img class="background book-bg" src="/images/bookshelf.jpeg">
   	<% include templates/navigation.ejs%>
   	<% include templates/flash.ejs %>
-	<h3 class="page-header"><%= title %> - A Textbook Trading Platform for UW Students</h3>
-    <form method="get" action="/">
-        <div class="form-group text-center">
-            <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
-        </div>
-        <div class="form-group text-center button">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </form>
-  	<table class="table table-striped text-center">
-        <thead class="thead-dark">
-            <tr>
-                <% if (keyword == null){%>
-                <th>
-                    <a href='<%="?sort=title"%>' class="td">Title</a>
-                </th>
-                <th>
-                    <a href='<%="?sort=course"%>' class="td">Course</a>
-                </th>
-                <th>
-                    <a href='<%="?sort=author"%>' class="td">Author</a>
-                </th>
-                <th>
-                    <a href='<%="?sort=price"%>' class="td">Lowest Price</a>
-                </th>
-                <th>
-                    No. of Listings
-                </th>
-                <%} else {%>
-                <th>
-                    <a href="<%='?search='+keyword+'&sort=title'%>" class="td">Title</a>
-                </th>
-                <th>
-                    <a href="<%='?search='+keyword+'&sort=course'%>" class="td">Course</a>
-                </th>
-                <th>
-                    <a href="<%='?search='+keyword+'&sort=author'%>" class="td">Author</a>
-                </th>
-                <th>
-                    <a href="<%='?search='+keyword+'&sort=price'%>" class="td">Lowest Price</a>
-                </th>
-                <th>
-                    No. of Listings
-                </th>
-                <%}%>
-            </tr>
-        </thead>
-        <tbody>
-        <% if (books.length > 0){ %>
-            <% books.forEach(function(book){ %>
-            <tr>
-                <td>
-                    <a href="<%='/setbook/'+book._id%>"><%=book.title%></a>
-                </td>
-                <td>
-                    <%=book.course%>
-                </td>
-                <td>
-                    <%=book.author%>
-                </td>
-                <td>
-                    <% if (book.min_price === -1){%>
-                        N/A
-                    <%}else{%>
-                    	$<%=book.min_price.toFixed(2)%>
+    <div class="container main-body">
+
+        <h3 class="page-header"><%= title %> - A Textbook Trading Platform for UW Students</h3>
+        <form method="get" action="/">
+            <div class="form-group text-center">
+                <input type="text" class="form-control" name="search" value="<%=keyword%>" placeholder="Search book titles, course names, authors...">
+            </div>
+            <div class="form-group text-center button">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+        <table class="table table-striped text-center">
+            <thead class="thead">
+                <tr>
+                    <% if (keyword == null){%>
+                    <th>
+                        <a href='<%="?sort=title"%>' class="td">Title</a>
+                    </th>
+                    <th>
+                        <a href='<%="?sort=course"%>' class="td">Course</a>
+                    </th>
+                    <th>
+                        <a href='<%="?sort=author"%>' class="td">Author</a>
+                    </th>
+                    <th>
+                        <a href='<%="?sort=price"%>' class="td">Lowest Price</a>
+                    </th>
+                    <th>
+                        No. of Listings
+                    </th>
+                    <%} else {%>
+                    <th>
+                        <a href="<%='?search='+keyword+'&sort=title'%>" class="td">Title</a>
+                    </th>
+                    <th>
+                        <a href="<%='?search='+keyword+'&sort=course'%>" class="td">Course</a>
+                    </th>
+                    <th>
+                        <a href="<%='?search='+keyword+'&sort=author'%>" class="td">Author</a>
+                    </th>
+                    <th>
+                        <a href="<%='?search='+keyword+'&sort=price'%>" class="td">Lowest Price</a>
+                    </th>
+                    <th>
+                        No. of Listings
+                    </th>
                     <%}%>
-                </td>
-                <td>
-                    <%=book.books.length%>
-                </td>
-            </tr>
-            <%})%>
-        <%}%>
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+            <% if (books.length > 0){ %>
+                <% books.forEach(function(book){ %>
+                <tr>
+                    <td>
+                        <a href="<%='/setbook/'+book._id%>"><%=book.title%></a>
+                    </td>
+                    <td>
+                        <%=book.course%>
+                    </td>
+                    <td>
+                        <%=book.author%>
+                    </td>
+                    <td>
+                        <% if (book.min_price === -1){%>
+                            N/A
+                        <%}else{%>
+                            $<%=book.min_price.toFixed(2)%>
+                        <%}%>
+                    </td>
+                    <td>
+                        <%=book.books.length%>
+                    </td>
+                </tr>
+                <%})%>
+            <%}%>
+            </tbody>
+        </table>
+    </div>
+
     <% include templates/footer.ejs%>
 </body>
 </html>
