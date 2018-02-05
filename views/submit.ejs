@@ -5,12 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
-
+<div class="main-body container">
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
@@ -31,6 +35,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+</div>
     <% include templates/footer.ejs%>
 </body>
 </html>

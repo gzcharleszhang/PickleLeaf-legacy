@@ -5,14 +5,18 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
     <% include templates/navigation.ejs%>
     <% include templates/flash.ejs %>
-
+<div class="main-body container">
     <h3 class="page-header"><%= booktitle %></h3>
-    <div class="row">
+    <div class="row" style="padding-top: 30px">
         <div class="col-md-4 offset-md-2">
             <div class="card text-center">
                 <div class="card-body">
@@ -70,6 +74,7 @@
         <%}%>
         </tbody>
     </table>
+</div>
     <% include templates/footer.ejs%>
 </body>
 </html>

@@ -5,9 +5,14 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
+
     <% include templates/navigation.ejs%>
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
@@ -15,6 +20,7 @@
         <%})%>
     <%}%>
     <% include templates/flash.ejs %>
+<div class="main-body container">
     <h3 class="page-header">Request a New Textbook</h3>
     <form method="post" action="/submit/setbook">
         <div class="form-group text-center">
@@ -37,6 +43,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
+</div>
     <% include templates/footer.ejs%>
 </body>
 </html>

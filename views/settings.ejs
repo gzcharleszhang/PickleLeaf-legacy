@@ -5,12 +5,16 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='shortcut icon' href='/images/favicon.ico' type='image/x-icon'/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Quicksand" rel="stylesheet">
+
 </head>
 
 <body>
+<img class="background book-bg" src="/images/bookshelf.jpeg">
+
 	<% include templates/navigation.ejs%>
 	<% include templates/flash.ejs %>
-
+<div class="main-body container">
     <% if (errors.length > 0){ %>
         <% errors.forEach(function(item){ %>
             <div class="alert alert-danger"><%=item.msg%></div>
@@ -19,7 +23,7 @@
     
 	<h3 class="page-header">Settings</h3>
 
-	<h5 class="text-center" style="padding-top: 40px;">Change Password</h5>
+	<h5 class="text-center" style="padding-top: 40px; color: white;">Change Password</h5>
 	<form method="post" action="/users/settings/changepass">
         <div class="form-group text-center">
             <label>UW Email</label>
@@ -38,10 +42,11 @@
             <input type="password" class="form-control" placeholder="Confirm password" name="newpass2">
         </div>
         <!-- TODO: Add email confirmation in future -->
-        <div class="form-group text-center button">
+        <div class="form-group text-center button" style="padding-top: 10px;">
             <button type="submit" class="btn btn-primary">Change Password</button>
         </div>
     </form>
+</div>
 	<% include templates/footer.ejs%>
 </body>
 </html>
