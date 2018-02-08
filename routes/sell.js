@@ -9,6 +9,9 @@ var Setbook = require('../models/setbook');
 router.get('/', ensureAuthenticated, function(req, res, next){
     var key = req.query.search;
     var sort = req.query.sort;
+    if (sort === 'price'){
+        sort = 'min_price';
+    }
     if (key == null){
         if (sort == null){
             Setbook.find({}, function(error, setbooks){
