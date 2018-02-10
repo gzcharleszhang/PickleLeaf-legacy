@@ -7,12 +7,16 @@ var User = require('../models/user');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    // keyword for searching
     var key = req.query.search;
+    // the parameter for sorting
     var sort = req.query.sort;
     if (sort === 'price'){
         sort = 'min_price';
     }
+    // If there is no searching
     if (key == null){
+        // If there is no sorting keyword, return all books
         if (sort == null){
             Setbook.find({}, function(error, setbooks){
                 res.render('index', {
@@ -21,6 +25,7 @@ router.get('/', function(req, res, next) {
                     keyword: null
                 })
             })
+            // if there is sorting, sort by that parameter
         } else {
             Setbook.find().sort(sort).exec(function(error, setbooks){
                 res.render('index', {
@@ -30,14 +35,16 @@ router.get('/', function(req, res, next) {
                 })
             })
         }
-
+    // IF there is a search keyword
     } else {
         var keyword = new RegExp(key, 'i');
+        // But if there is not sorting
         if (sort == null){
 
+            // Return the books searched using the search keyword
             Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}, function(err, setbooks){
                 if (err) return handleError(err);
-
+                // If there are no books, then return no books
                 if (setbooks == null) {
                     Setbook.find({}, function (error, setbooks) {
                         res.render('index', {
@@ -55,6 +62,7 @@ router.get('/', function(req, res, next) {
                     })
                 }
             })
+            // If there is a sort keyword, return books sorted by that keyword
         } else {
             Setbook.find({$or: [{title: keyword}, {author: keyword}, {course: keyword}]}).sort(sort).exec(function(err, setbooks){
                 if (err) return handleError(err);

@@ -25,73 +25,81 @@
 </form>
 
 <h3 class="page-header">Messages Received</h3>
-<table class="table table-striped text-center">
-    <thead class="thead">
-    <tr>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Sender</th>
-        <th>Content</th>
-    </tr>
-    </thead>
-    <tbody>
     <% if (messages_received.length > 0){ %>
-    <% messages_received.forEach(function(msg){ %>
-    <tr>
-        <td>
-            <%=msg.date.toLocaleTimeString("en-US")%> <br>
-            <%=msg.date.toLocaleDateString("en-US")%>
-        </td>
-        <td>
-            <%=msg.title%>
-        </td>
-        <td>
-            <a href="<%='/users/profile/'+msg.sender._id%>">
-                <%=msg.sender.username%>
-            </a>
-        </td>
-        <td>
-            <%=msg.content%>
-        </td>
-    </tr>
-    <%})%>
+    <table class="table table-striped text-center">
+        <thead class="thead">
+        <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Sender</th>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% messages_received.forEach(function(msg){ %>
+        <tr>
+            <td>
+                <%=msg.date.toLocaleTimeString("en-US")%> <br>
+                <%=msg.date.toLocaleDateString("en-US")%>
+            </td>
+            <td>
+                <%=msg.title%>
+            </td>
+            <td>
+                <a href="<%='/users/profile/'+msg.sender._id%>">
+                    <%=msg.sender.username%>
+                </a>
+            </td>
+            <td>
+                <%=msg.content%>
+            </td>
+        </tr>
+        <%})%>
+
+        </tbody>
+    </table>
+    <%}else{%>
+        <div class="alert-danger alert">You don't have any messages!</div>
     <%}%>
-    </tbody>
-</table>
 <h3 class="page-header">Messages Sent</h3>
-<table class="table table-striped text-center">
-    <thead class="thead">
-    <tr>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Receiver</th>
-        <th>Content</th>
-    </tr>
-    </thead>
-    <tbody>
     <% if (messages_sent.length > 0){ %>
-    <% messages_sent.forEach(function(msg){ %>
-    <tr>
-        <td>
-            <%=msg.date.toLocaleTimeString("en-US")%> <br>
-            <%=msg.date.toLocaleDateString("en-US")%>
-        </td>
-        <td>
-            <%=msg.title%>
-        </td>
-        <td>
-            <a href="<%='/users/profile/'+msg.receiver._id%>">
-                <%=msg.receiver.username%>
-            </a>
-        </td>
-        <td>
-            <%=msg.content%>
-        </td>
-    </tr>
-    <%})%>
+    <table class="table table-striped text-center">
+        <thead class="thead">
+        <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Receiver</th>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% messages_sent.forEach(function(msg){ %>
+        <tr>
+            <td>
+                <%=msg.date.toLocaleTimeString("en-US")%> <br>
+                <%=msg.date.toLocaleDateString("en-US")%>
+            </td>
+            <td>
+                <%=msg.title%>
+            </td>
+            <td>
+                <a href="<%='/users/profile/'+msg.receiver._id%>">
+                    <%=msg.receiver.username%>
+                </a>
+            </td>
+            <td>
+                <%=msg.content%>
+            </td>
+        </tr>
+        <%})%>
+
+        </tbody>
+    </table>
+    <%}else{%>
+        <div class="alert-danger alert">You haven't sent any messages!</div>
     <%}%>
-    </tbody>
-</table>
 </div>
 <% include templates/footer.ejs%>
 </body>
