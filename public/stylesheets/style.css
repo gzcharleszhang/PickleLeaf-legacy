@@ -87,6 +87,10 @@ form {
     background-color: rgba(237,234,229,0.5);
 }
 
+.navbar-collapse.collapse.in {
+  display: block!important;
+}
+
 .nav-space{
     padding-top: 5px;
 }
