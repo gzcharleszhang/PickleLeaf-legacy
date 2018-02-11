@@ -11,7 +11,7 @@ var Rating = require('../models/rating');
 /* GET register page*/
 router.get('/register', function(req, res, next) {
     res.render('register', {
-        title: 'UW Textbooks',
+        title: 'PickleLeaf',
         errors: false
     });
 });
@@ -38,7 +38,7 @@ router.post('/register', function(req, res, next) {
         User.find({email: email}, function (err, email_exist){
             if(errors) {
                 res.render('register', {
-                    title: 'UW Textbooks',
+                    title: 'PickleLeaf',
                     errors: errors
                 });
             }else if ((email_exist.length > 0) && (username_exist.length > 0)){
@@ -112,7 +112,7 @@ passport.deserializeUser(function(id, done) {
 // GET login page
 router.get('/login', function(req, res, next) {
     res.render('login', {
-        title: 'UW Textbooks'
+        title: 'PickleLeaf'
     })
 });
 
