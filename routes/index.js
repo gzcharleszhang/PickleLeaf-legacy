@@ -97,8 +97,16 @@ router.get('/', function(req, res, next) {
 router.get('/setbook/:setbookid', function(req, res, next){
   var setbookid = req.params.setbookid;
   var setbook = new Setbook();
+  var sort = req.query.sort;
+  console.log(sort);
+  var query;
+  if (sort === "price"){
+      query = Setbook.findById(setbookid).populate({path: 'books', populate: {path: 'sellerId'}, options:{sort: 'price'}});
+  } else{
+      query = Setbook.findById(setbookid).populate({path: 'books', populate: {path: 'sellerId'}});
+  }
 
-  Setbook.findById(setbookid).populate({path: 'books', populate: {path: 'sellerId'}}).exec(function (err, setbook) {
+  query.exec(function (err, setbook) {
     if (err){
         res.render('error', {
             message: 'Book not Found',
@@ -107,7 +115,6 @@ router.get('/setbook/:setbookid', function(req, res, next){
         })
     }else{
         console.log(setbook);
-        console.log(setbook.books.sellerId);
         var book = new Book();
 
         res.render('setbook', {
